@@ -130,43 +130,43 @@ SOLANA_PRIVATE_KEY=...   # Solana wallet with SOL
 
 ```bash
 # Show current configuration
-skills-store scanner config
+strategy-memepump-scanner config
 
 # Run a single scan cycle (scan -> filter -> signal -> trade -> monitor)
-skills-store scanner tick
+strategy-memepump-scanner tick
 
 # Start continuous daemon (tick every 10 seconds)
-skills-store scanner start
+strategy-memepump-scanner start
 
 # Stop running daemon
-skills-store scanner stop
+strategy-memepump-scanner stop
 
 # View status and positions
-skills-store scanner status
+strategy-memepump-scanner status
 
 # View PnL report
-skills-store scanner report
+strategy-memepump-scanner report
 
 # Dry-run: analyze pipeline without trading
-skills-store scanner analyze
+strategy-memepump-scanner analyze
 ```
 
-Configuration is managed via `skills-store scanner config` and `skills-store scanner set <key> <value>`. Changes take effect on the next scan cycle.
+Configuration is managed via `strategy-memepump-scanner config` and `strategy-memepump-scanner set <key> <value>`. Changes take effect on the next scan cycle.
 
 ## Command Index
 
 | # | Command | Auth | Description |
 |---|---------|------|-------------|
-| 1 | `skills-store scanner tick` | Yes | Execute one scan cycle |
-| 2 | `skills-store scanner start` | Yes | Start foreground daemon (tick every 10s) |
-| 3 | `skills-store scanner stop` | No | Stop running daemon via PID file |
-| 4 | `skills-store scanner status` | No | Show positions, session stats, PnL |
-| 5 | `skills-store scanner report` | No | Detailed PnL report |
-| 6 | `skills-store scanner history` | No | Trade history |
-| 7 | `skills-store scanner reset --force` | No | Clear all state |
-| 8 | `skills-store scanner analyze` | Yes | Dry-run full pipeline, output filter/signal results |
-| 9 | `skills-store scanner config` | No | Show all parameters |
-| 10 | `skills-store scanner set <key> <value>` | No | Set a config parameter |
+| 1 | `strategy-memepump-scanner tick` | Yes | Execute one scan cycle |
+| 2 | `strategy-memepump-scanner start` | Yes | Start foreground daemon (tick every 10s) |
+| 3 | `strategy-memepump-scanner stop` | No | Stop running daemon via PID file |
+| 4 | `strategy-memepump-scanner status` | No | Show positions, session stats, PnL |
+| 5 | `strategy-memepump-scanner report` | No | Detailed PnL report |
+| 6 | `strategy-memepump-scanner history` | No | Trade history |
+| 7 | `strategy-memepump-scanner reset --force` | No | Clear all state |
+| 8 | `strategy-memepump-scanner analyze` | Yes | Dry-run full pipeline, output filter/signal results |
+| 9 | `strategy-memepump-scanner config` | No | Show all parameters |
+| 10 | `strategy-memepump-scanner set <key> <value>` | No | Set a config parameter |
 
 ## Core Strategy
 
@@ -448,8 +448,8 @@ monitor_loop()                       ← TP1/TP2 use pct + be_offset
 1. skills-store memepump tokens --chain solana --stage MIGRATED           → manual browse
 2. skills-store memepump token-dev-info --address <addr>                  → manual dev check
        ↓ looks good, start the bot
-3. skills-store scanner start                                             → auto mode
-4. skills-store scanner status                                            → monitor
+3. strategy-memepump-scanner start                                             → auto mode
+4. strategy-memepump-scanner status                                            → monitor
 ```
 
 ### Workflow B: Signal Investigation
@@ -457,7 +457,7 @@ monitor_loop()                       ← TP1/TP2 use pct + be_offset
 > User: "The scanner found a SCALP signal on TOKEN, should I trust it?"
 
 ```
-1. skills-store scanner status                                            → check signal details
+1. strategy-memepump-scanner status                                            → check signal details
 2. skills-store memepump token-details --address <addr>                   → full detail
 3. skills-store memepump token-dev-info --address <addr>                  → dev deep dive
 4. skills-store memepump token-bundle-info --address <addr>               → bundle check
@@ -470,7 +470,7 @@ monitor_loop()                       ← TP1/TP2 use pct + be_offset
 > User: "The bot closed a trade, analyze what happened"
 
 ```
-1. skills-store scanner history                                           → trade details
+1. strategy-memepump-scanner history                                           → trade details
 2. skills-store market kline --address <addr> --chain solana              → price action
 3. skills-store memepump token-details --address <addr>                   → current state
 ```

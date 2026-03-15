@@ -154,20 +154,20 @@ Base has low gas (~$0.001-0.05 gwei per tx, ~$0.01-0.03 cost), so shorter interv
 
 ```bash
 # Base — low gas, check every 5 minutes, rebalance if spread > 0.3%
-skills-store auto-rebalance start --chain base --interval 300 --min-spread 0.3
+strategy-auto-rebalance start --chain base --interval 300 --min-spread 0.3
 
 # Ethereum — higher gas, check every hour, rebalance if spread > 1.0%
-skills-store auto-rebalance start --chain ethereum --interval 3600 --min-spread 1.0
+strategy-auto-rebalance start --chain ethereum --interval 3600 --min-spread 1.0
 
 # With Telegram notifications
-skills-store auto-rebalance start --chain base --interval 300 --min-spread 0.3 \
+strategy-auto-rebalance start --chain base --interval 300 --min-spread 0.3 \
   --telegram-token <BOT_TOKEN> --telegram-chat <CHAT_ID>
 
 # Check daemon status
-skills-store auto-rebalance status
+strategy-auto-rebalance status
 
 # Stop daemon
-skills-store auto-rebalance stop
+strategy-auto-rebalance stop
 ```
 
 ## Command Index
@@ -180,10 +180,10 @@ skills-store auto-rebalance stop
 
 ## CLI Command Reference
 
-### skills-store auto-rebalance start
+### strategy-auto-rebalance start
 
 ```bash
-skills-store auto-rebalance start [--chain <chain>] [--interval <seconds>] [--min-spread <pct>] [--max-break-even <days>] [--telegram-token <token>] [--telegram-chat <id>]
+strategy-auto-rebalance start [--chain <chain>] [--interval <seconds>] [--min-spread <pct>] [--max-break-even <days>] [--telegram-token <token>] [--telegram-chat <id>]
 ```
 
 | Param | Default | Description |
@@ -216,11 +216,11 @@ skills-store auto-rebalance start [--chain <chain>] [--interval <seconds>] [--mi
 - State persistence at `~/.skills-store/auto-rebalance-state.json`
 - PID management — prevents duplicate instances
 
-### skills-store auto-rebalance stop
+### strategy-auto-rebalance stop
 
 Sends SIGTERM to the running daemon via PID file (`~/.skills-store/auto-rebalance-daemon.pid`).
 
-### skills-store auto-rebalance status
+### strategy-auto-rebalance status
 
 Shows daemon status: running/stopped, config, current position (protocol + APY + balance), last check time, rebalance history.
 
@@ -247,25 +247,25 @@ Each cycle, the daemon:
 ```
 1. skills-store aave markets --chain base             → check current Aave rates
 2. skills-store morpho vaults --chain base            → see Morpho vault options
-3. skills-store auto-rebalance start --chain base ...     → let the daemon auto-optimize
+3. strategy-auto-rebalance start --chain base ...     → let the daemon auto-optimize
 ```
 
 ### Workflow B: Check Status → Manual Intervention
 
 ```
-1. skills-store auto-rebalance status                     → review position and PnL
+1. strategy-auto-rebalance status                     → review position and PnL
 2. skills-store morpho positions <address> --chain base → verify on-chain state
-3. skills-store auto-rebalance stop                       → stop if needed
+3. strategy-auto-rebalance stop                       → stop if needed
 ```
 
 ### Workflow C: Multi-Chain
 
 ```
 # Terminal 1
-skills-store auto-rebalance start --chain base --interval 300 --min-spread 0.3
+strategy-auto-rebalance start --chain base --interval 300 --min-spread 0.3
 
 # Terminal 2
-skills-store auto-rebalance start --chain ethereum --interval 3600 --min-spread 1.0
+strategy-auto-rebalance start --chain ethereum --interval 3600 --min-spread 1.0
 ```
 
 Note: each chain uses the same PID file, so only one daemon instance can run at a time. For multi-chain, run in separate terminals with separate working directories, or stop one before starting the other.

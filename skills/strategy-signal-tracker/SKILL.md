@@ -139,28 +139,28 @@ SOLANA_PRIVATE_KEY=...   # Solana wallet with SOL
 
 ```bash
 # Show current configuration
-skills-store signal-tracker config
+strategy-signal-tracker config
 
 # Run a single tick (fetch signals, check exits, open new positions)
-skills-store signal-tracker tick
+strategy-signal-tracker tick
 
 # Start continuous bot (tick every 20 seconds)
-skills-store signal-tracker start
+strategy-signal-tracker start
 
 # Start in dry-run mode (simulate without executing swaps)
-skills-store signal-tracker start --dry-run
+strategy-signal-tracker start --dry-run
 
 # Stop running bot
-skills-store signal-tracker stop
+strategy-signal-tracker stop
 
 # View status and positions
-skills-store signal-tracker status
+strategy-signal-tracker status
 
 # View PnL report
-skills-store signal-tracker report
+strategy-signal-tracker report
 ```
 
-Configuration is managed via `skills-store signal-tracker config` and `skills-store signal-tracker set <key> <value>`. Changes take effect on the next tick without restarting the bot.
+Configuration is managed via `strategy-signal-tracker config` and `strategy-signal-tracker set <key> <value>`. Changes take effect on the next tick without restarting the bot.
 
 ## Core Strategy
 
@@ -353,24 +353,24 @@ Examples:
 
 | # | Command | Auth | Description |
 |---|---------|------|-------------|
-| 1 | `skills-store signal-tracker tick` | Yes | Execute one tick: fetch signals, check exits, open positions |
-| 2 | `skills-store signal-tracker tick --dry-run` | Yes | Simulate without executing swaps |
-| 3 | `skills-store signal-tracker start` | Yes | Start foreground bot (tick every 20s) |
-| 4 | `skills-store signal-tracker start --dry-run` | Yes | Start in dry-run mode |
-| 5 | `skills-store signal-tracker stop` | No | Stop running bot via PID file |
-| 6 | `skills-store signal-tracker status` | No | Show positions, session stats, PnL |
-| 7 | `skills-store signal-tracker report` | No | Detailed PnL report |
-| 8 | `skills-store signal-tracker history` | No | Trade history |
-| 9 | `skills-store signal-tracker reset --force` | No | Clear all state |
-| 10 | `skills-store signal-tracker analyze` | Yes | Market analysis (current signals) |
-| 11 | `skills-store signal-tracker config` | No | Show all parameters |
-| 12 | `skills-store signal-tracker set <key> <value>` | No | Set a config parameter |
+| 1 | `strategy-signal-tracker tick` | Yes | Execute one tick: fetch signals, check exits, open positions |
+| 2 | `strategy-signal-tracker tick --dry-run` | Yes | Simulate without executing swaps |
+| 3 | `strategy-signal-tracker start` | Yes | Start foreground bot (tick every 20s) |
+| 4 | `strategy-signal-tracker start --dry-run` | Yes | Start in dry-run mode |
+| 5 | `strategy-signal-tracker stop` | No | Stop running bot via PID file |
+| 6 | `strategy-signal-tracker status` | No | Show positions, session stats, PnL |
+| 7 | `strategy-signal-tracker report` | No | Detailed PnL report |
+| 8 | `strategy-signal-tracker history` | No | Trade history |
+| 9 | `strategy-signal-tracker reset --force` | No | Clear all state |
+| 10 | `strategy-signal-tracker analyze` | Yes | Market analysis (current signals) |
+| 11 | `strategy-signal-tracker config` | No | Show all parameters |
+| 12 | `strategy-signal-tracker set <key> <value>` | No | Set a config parameter |
 
 ---
 
 ## Configuration
 
-All parameters are viewable with `skills-store signal-tracker config` and modifiable with `skills-store signal-tracker set <key> <value>`. Changes take effect on the next polling cycle (≤20s) without restarting the bot.
+All parameters are viewable with `strategy-signal-tracker config` and modifiable with `strategy-signal-tracker set <key> <value>`. Changes take effect on the next polling cycle (≤20s) without restarting the bot.
 
 ### Key Parameters
 

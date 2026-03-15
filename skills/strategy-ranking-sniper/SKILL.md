@@ -139,9 +139,9 @@ Telegram credentials can also be set in the config file (`~/.skills-store/rankin
 
 ## Before Starting the Bot
 
-**IMPORTANT:** Before running `skills-store ranking-sniper start`, you MUST:
+**IMPORTANT:** Before running `strategy-ranking-sniper start`, you MUST:
 
-1. Run `skills-store ranking-sniper config` to show the user their current parameters
+1. Run `strategy-ranking-sniper config` to show the user their current parameters
 2. Present the parameters in a readable table and ask if they want to adjust any
 3. If the user wants to change parameters, edit the config file at `~/.skills-store/ranking_sniper_config.json` directly
 4. Parameters are persisted across restarts
@@ -149,56 +149,56 @@ Telegram credentials can also be set in the config file (`~/.skills-store/rankin
 Example flow:
 ```bash
 # Show current config
-skills-store ranking-sniper config
+strategy-ranking-sniper config
 
 # Start with custom budget and per-trade amount
-skills-store ranking-sniper start --budget 1.0 --per-trade 0.1
+strategy-ranking-sniper start --budget 1.0 --per-trade 0.1
 
 # Or start in dry-run mode first to observe
-skills-store ranking-sniper start --budget 0.5 --per-trade 0.05 --dry-run
+strategy-ranking-sniper start --budget 0.5 --per-trade 0.05 --dry-run
 ```
 
 ## Quickstart
 
 ```bash
 # View current ranking and market conditions
-skills-store ranking-sniper analyze
+strategy-ranking-sniper analyze
 
 # View current state and positions
-skills-store ranking-sniper status
+strategy-ranking-sniper status
 
 # Run a single tick (scan ranking, check exits, buy if signal)
-skills-store ranking-sniper tick --budget 0.5 --per-trade 0.05
+strategy-ranking-sniper tick --budget 0.5 --per-trade 0.05
 
 # Dry-run tick (no real swaps)
-skills-store ranking-sniper tick --budget 0.5 --per-trade 0.05 --dry-run
+strategy-ranking-sniper tick --budget 0.5 --per-trade 0.05 --dry-run
 
 # Start continuous bot (tick every 10 seconds)
-skills-store ranking-sniper start --budget 0.5 --per-trade 0.05
+strategy-ranking-sniper start --budget 0.5 --per-trade 0.05
 
 # Stop running bot
-skills-store ranking-sniper stop
+strategy-ranking-sniper stop
 
 # Emergency: sell all open positions
-skills-store ranking-sniper sell-all
+strategy-ranking-sniper sell-all
 ```
 
 ## Command Index
 
 | # | Command | Auth | Description |
 |---|---------|------|-------------|
-| 1 | `skills-store ranking-sniper tick` | Yes | Execute one tick: fetch ranking, check exits, scan new entries |
-| 2 | `skills-store ranking-sniper start` | Yes | Start foreground bot loop (tick every 10s) |
-| 3 | `skills-store ranking-sniper stop` | No | Stop running bot via PID file |
-| 4 | `skills-store ranking-sniper status` | No | Show current state, positions, and PnL |
-| 5 | `skills-store ranking-sniper report` | No | Detailed PnL and performance report |
-| 6 | `skills-store ranking-sniper history` | No | Show trade history |
-| 7 | `skills-store ranking-sniper reset --force` | No | Clear all state data |
-| 8 | `skills-store ranking-sniper analyze` | No* | Market analysis (current ranking, top tokens) |
-| 9 | `skills-store ranking-sniper test-trade` | Yes | Buy+sell round-trip for a token (dev/debug) |
-| 10 | `skills-store ranking-sniper config` | No | Show all configurable parameters |
-| 11 | `skills-store ranking-sniper sell-all` | Yes | Force-sell all open positions immediately |
-| 12 | `skills-store ranking-sniper sell` | Yes | Sell a specific token by address |
+| 1 | `strategy-ranking-sniper tick` | Yes | Execute one tick: fetch ranking, check exits, scan new entries |
+| 2 | `strategy-ranking-sniper start` | Yes | Start foreground bot loop (tick every 10s) |
+| 3 | `strategy-ranking-sniper stop` | No | Stop running bot via PID file |
+| 4 | `strategy-ranking-sniper status` | No | Show current state, positions, and PnL |
+| 5 | `strategy-ranking-sniper report` | No | Detailed PnL and performance report |
+| 6 | `strategy-ranking-sniper history` | No | Show trade history |
+| 7 | `strategy-ranking-sniper reset --force` | No | Clear all state data |
+| 8 | `strategy-ranking-sniper analyze` | No* | Market analysis (current ranking, top tokens) |
+| 9 | `strategy-ranking-sniper test-trade` | Yes | Buy+sell round-trip for a token (dev/debug) |
+| 10 | `strategy-ranking-sniper config` | No | Show all configurable parameters |
+| 11 | `strategy-ranking-sniper sell-all` | Yes | Force-sell all open positions immediately |
+| 12 | `strategy-ranking-sniper sell` | Yes | Sell a specific token by address |
 
 *Analyze requires OKX API keys for ranking data but not SOL_PRIVATE_KEY.
 
@@ -326,7 +326,7 @@ Priority order (first match exits):
 
 ## Configurable Parameters
 
-Parameters are persisted at `~/.skills-store/ranking_sniper_config.json`. View with `skills-store ranking-sniper config`. Edit the JSON file directly to change values.
+Parameters are persisted at `~/.skills-store/ranking_sniper_config.json`. View with `strategy-ranking-sniper config`. Edit the JSON file directly to change values.
 
 ### Money Management
 
@@ -373,12 +373,12 @@ Parameters are persisted at `~/.skills-store/ranking_sniper_config.json`. View w
 
 ## CLI Command Reference
 
-### skills-store ranking-sniper tick
+### strategy-ranking-sniper tick
 
 Execute one tick cycle: fetch ranking, check exits for existing positions, scan for new entry signals, execute trades.
 
 ```bash
-skills-store ranking-sniper tick [--budget <sol>] [--per-trade <sol>] [--dry-run]
+strategy-ranking-sniper tick [--budget <sol>] [--per-trade <sol>] [--dry-run]
 ```
 
 | Param | Required | Default | Description |
@@ -406,12 +406,12 @@ skills-store ranking-sniper tick [--budget <sol>] [--per-trade <sol>] [--dry-run
 - `exit_failed` — Sell swap failed (symbol, reason, error)
 - `no_ranking_data` — No ranking data available
 
-### skills-store ranking-sniper start
+### strategy-ranking-sniper start
 
 Start the bot in foreground, executing `tick` every 10 seconds. Creates a PID file at `~/.skills-store/ranking_sniper.pid`. Use Ctrl+C or `ranking-sniper stop` to terminate. Logs to `~/.skills-store/ranking_sniper.log`.
 
 ```bash
-skills-store ranking-sniper start [--budget <sol>] [--per-trade <sol>] [--dry-run]
+strategy-ranking-sniper start [--budget <sol>] [--per-trade <sol>] [--dry-run]
 ```
 
 | Param | Required | Default | Description |
@@ -422,20 +422,20 @@ skills-store ranking-sniper start [--budget <sol>] [--per-trade <sol>] [--dry-ru
 
 Prints the full parameter summary before starting. Sends Telegram notification on start/stop if configured.
 
-### skills-store ranking-sniper stop
+### strategy-ranking-sniper stop
 
 Stop a running bot by sending SIGTERM to the process in the PID file.
 
 ```bash
-skills-store ranking-sniper stop
+strategy-ranking-sniper stop
 ```
 
-### skills-store ranking-sniper status
+### strategy-ranking-sniper status
 
 Show current bot state, open positions, PnL overview, and whether the bot is running.
 
 ```bash
-skills-store ranking-sniper status
+strategy-ranking-sniper status
 ```
 
 **Return fields:**
@@ -452,12 +452,12 @@ skills-store ranking-sniper status
 | `known_tokens_count` | Total tokens seen |
 | `consecutive_errors` | Current error count |
 
-### skills-store ranking-sniper report
+### strategy-ranking-sniper report
 
 Detailed performance report with win/loss stats.
 
 ```bash
-skills-store ranking-sniper report
+strategy-ranking-sniper report
 ```
 
 **Return fields:**
@@ -476,12 +476,12 @@ skills-store ranking-sniper report
 | `loss_count` | Losing trades |
 | `win_rate` | Win percentage |
 
-### skills-store ranking-sniper history
+### strategy-ranking-sniper history
 
 Show trade history (most recent first).
 
 ```bash
-skills-store ranking-sniper history [--limit <n>]
+strategy-ranking-sniper history [--limit <n>]
 ```
 
 | Param | Required | Default | Description |
@@ -490,24 +490,24 @@ skills-store ranking-sniper history [--limit <n>]
 
 Each trade includes: time, symbol, token_address, action (BUY/SELL), price, amount_sol, score, exit_reason, pnl_pct, pnl_sol, tx_hash.
 
-### skills-store ranking-sniper reset
+### strategy-ranking-sniper reset
 
 Delete all sniper state. Requires `--force` flag for safety.
 
 ```bash
-skills-store ranking-sniper reset --force
+strategy-ranking-sniper reset --force
 ```
 
 | Param | Required | Default | Description |
 |-------|----------|---------|-------------|
 | `--force` | Yes | - | Required to confirm destructive action |
 
-### skills-store ranking-sniper analyze
+### strategy-ranking-sniper analyze
 
 Market analysis showing the current trending ranking, top tokens, and bot state summary.
 
 ```bash
-skills-store ranking-sniper analyze
+strategy-ranking-sniper analyze
 ```
 
 **Return fields:**
@@ -519,12 +519,12 @@ skills-store ranking-sniper analyze
 | `known_tokens_count` | Total tokens the bot has seen |
 | `active_positions` | Number of open positions |
 
-### skills-store ranking-sniper test-trade
+### strategy-ranking-sniper test-trade
 
 Execute a buy+sell round-trip for a specific token. For development and debugging only. Buys a small amount of the token, waits a few seconds, then sells it back.
 
 ```bash
-skills-store ranking-sniper test-trade <token_address> [--amount <sol>]
+strategy-ranking-sniper test-trade <token_address> [--amount <sol>]
 ```
 
 | Param | Required | Default | Description |
@@ -546,12 +546,12 @@ skills-store ranking-sniper test-trade <token_address> [--amount <sol>]
 | `price_before` | Price before buy |
 | `price_after` | Price after sell |
 
-### skills-store ranking-sniper config
+### strategy-ranking-sniper config
 
 Show all configurable parameters and their current values, organized by category. Also shows the config file and log file paths.
 
 ```bash
-skills-store ranking-sniper config
+strategy-ranking-sniper config
 ```
 
 Displays parameter groups:
@@ -565,12 +565,12 @@ Displays parameter groups:
 - Logging
 - Telegram notifications
 
-### skills-store ranking-sniper sell-all
+### strategy-ranking-sniper sell-all
 
 Force-sell all open positions immediately. Retries with halved amounts if liquidity is insufficient (up to 4 attempts per position).
 
 ```bash
-skills-store ranking-sniper sell-all
+strategy-ranking-sniper sell-all
 ```
 
 **Return fields:**
@@ -581,12 +581,12 @@ skills-store ranking-sniper sell-all
 | `failed` | Number of positions that failed to sell |
 | `results` | Array of per-position results (symbol, token, status, tx_hash, sol_out, error) |
 
-### skills-store ranking-sniper sell
+### strategy-ranking-sniper sell
 
 Sell a specific token by contract address with a raw token amount.
 
 ```bash
-skills-store ranking-sniper sell <token_address> --amount <raw_amount>
+strategy-ranking-sniper sell <token_address> --amount <raw_amount>
 ```
 
 | Param | Required | Default | Description |
@@ -668,13 +668,13 @@ fetch_ranking(top_n=20)              <- OKX /token/toplist (sort by 5m change)
 > User: "What's trending on Solana right now? Start sniping if it looks good."
 
 ```
-1. skills-store ranking-sniper analyze          -> see current ranking + top tokens
-2. skills-store ranking-sniper config           -> review parameters
+1. strategy-ranking-sniper analyze          -> see current ranking + top tokens
+2. strategy-ranking-sniper config           -> review parameters
        | user adjusts thresholds if needed
-3. skills-store ranking-sniper tick --dry-run   -> dry-run to see what passes filters
+3. strategy-ranking-sniper tick --dry-run   -> dry-run to see what passes filters
        | looks good
-4. skills-store ranking-sniper start --budget 0.5 --per-trade 0.05  -> go live
-5. skills-store ranking-sniper status           -> monitor positions
+4. strategy-ranking-sniper start --budget 0.5 --per-trade 0.05  -> go live
+5. strategy-ranking-sniper status           -> monitor positions
 ```
 
 ### Workflow B: Monitor and Emergency Exit
@@ -682,10 +682,10 @@ fetch_ranking(top_n=20)              <- OKX /token/toplist (sort by 5m change)
 > User: "Check my sniper positions. Sell everything if it's losing."
 
 ```
-1. skills-store ranking-sniper status           -> see positions + PnL
+1. strategy-ranking-sniper status           -> see positions + PnL
        | user sees losses
-2. skills-store ranking-sniper sell-all         -> emergency exit all positions
-3. skills-store ranking-sniper report           -> review final stats
+2. strategy-ranking-sniper sell-all         -> emergency exit all positions
+3. strategy-ranking-sniper report           -> review final stats
 ```
 
 ### Workflow C: Research a Specific Token
@@ -693,7 +693,7 @@ fetch_ranking(top_n=20)              <- OKX /token/toplist (sort by 5m change)
 > User: "The sniper bought TOKEN, tell me more about it."
 
 ```
-1. skills-store ranking-sniper status                              -> get token address
+1. strategy-ranking-sniper status                              -> get token address
 2. okx-dex-token    skills-store token search TOKEN --chain solana -> token details
 3. okx-dex-market   skills-store market kline --address <addr> --chain solana -> chart
 4. okx-wallet-portfolio  skills-store portfolio balance --chain solana -> wallet balance
@@ -705,10 +705,10 @@ fetch_ranking(top_n=20)              <- OKX /token/toplist (sort by 5m change)
 
 ```
 1. okx-dex-token    skills-store token search HYPE --chain solana              -> find token
-2. skills-store ranking-sniper test-trade <token_address> --amount 0.01        -> round-trip test
-3. skills-store ranking-sniper start --budget 0.5 --per-trade 0.05 --dry-run  -> dry-run session
+2. strategy-ranking-sniper test-trade <token_address> --amount 0.01        -> round-trip test
+3. strategy-ranking-sniper start --budget 0.5 --per-trade 0.05 --dry-run  -> dry-run session
        | verify actions look correct
-4. skills-store ranking-sniper start --budget 0.5 --per-trade 0.05            -> go live
+4. strategy-ranking-sniper start --budget 0.5 --per-trade 0.05            -> go live
 ```
 
 ---
