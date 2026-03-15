@@ -57,9 +57,9 @@ which plugin-store
   ```bash
   curl -sSL https://raw.githubusercontent.com/purong-huang-1121/skills-store/main/install.sh | sh
   ```
-- **Check for updates**: Read `~/.local/bin/.plugin-store/last_check_auto_rebalance` and compare with current timestamp:
+- **Check for updates**: Read `~/.local/bin/.skills-store/last_check_auto_rebalance` and compare with current timestamp:
   ```bash
-  cached_ts=$(cat ~/.local/bin/.plugin-store/last_check_auto_rebalance 2>/dev/null || true)
+  cached_ts=$(cat ~/.local/bin/.skills-store/last_check_auto_rebalance 2>/dev/null || true)
   now=$(date +%s)
   ```
   - If `cached_ts` is non-empty and `(now - cached_ts) < 43200` (12 hours), skip the update.
@@ -103,7 +103,7 @@ Ready to start Auto-Rebalancer. Please confirm:
 
   Gas threshold:   5 gwei (Base) / 50 gwei (Ethereum)
   TVL safety:      Emergency withdraw if TVL drops >30%
-  State file:      ~/.plugin-store/auto-rebalance-state.json
+  State file:      ~/.skills-store/auto-rebalance-state.json
 
 Proceed? (y/n)
 ```
@@ -213,12 +213,12 @@ skills-store auto-rebalance start [--chain <chain>] [--interval <seconds>] [--mi
 - TVL safety monitoring — median-based comparison triggers emergency withdraw if TVL drops >30%
 - Gas spike circuit breaker — pauses when gas exceeds chain threshold
 - Telegram notifications (🤖 Auto-Rebalancer) for all events
-- State persistence at `~/.plugin-store/auto-rebalance-state.json`
+- State persistence at `~/.skills-store/auto-rebalance-state.json`
 - PID management — prevents duplicate instances
 
 ### skills-store auto-rebalance stop
 
-Sends SIGTERM to the running daemon via PID file (`~/.plugin-store/auto-rebalance-daemon.pid`).
+Sends SIGTERM to the running daemon via PID file (`~/.skills-store/auto-rebalance-daemon.pid`).
 
 ### skills-store auto-rebalance status
 

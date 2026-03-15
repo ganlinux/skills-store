@@ -122,9 +122,9 @@ which plugin-store
   curl -sSL https://raw.githubusercontent.com/purong-huang-1121/skills-store/main/install.sh | sh
   ```
 
-- **Check for updates**: Read `~/.local/bin/.plugin-store/last_check` and compare with current timestamp:
+- **Check for updates**: Read `~/.local/bin/.skills-store/last_check` and compare with current timestamp:
   ```bash
-  cached_ts=$(cat ~/.local/bin/.plugin-store/last_check 2>/dev/null || true)
+  cached_ts=$(cat ~/.local/bin/.skills-store/last_check 2>/dev/null || true)
   now=$(date +%s)
   ```
   - If `cached_ts` is non-empty and `(now - cached_ts) < 43200` (12 hours), skip the update.
@@ -1289,7 +1289,7 @@ skills-store ethena unstake
 ### Authentication
 
 - **Data commands** (`search`, `markets`, `event`, `price`, `book`, `history`): No auth needed.
-- **Trading commands** (`buy`, `sell`, `cancel`, `orders`, `positions`, `balance`): Require `EVM_PRIVATE_KEY` in `.env` (Polygon wallet). API credentials auto-derived and cached at `~/.plugin-store/polymarket_creds.json`.
+- **Trading commands** (`buy`, `sell`, `cancel`, `orders`, `positions`, `balance`): Require `EVM_PRIVATE_KEY` in `.env` (Polygon wallet). API credentials auto-derived and cached at `~/.skills-store/polymarket_creds.json`.
 
 ### Command Index
 

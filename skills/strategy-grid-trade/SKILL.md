@@ -58,9 +58,9 @@ which plugin-store
   curl -sSL https://raw.githubusercontent.com/purong-huang-1121/skills-store/main/install.sh | sh
   ```
 
-- **Check for updates**: Read `~/.local/bin/.plugin-store/last_check_grid` and compare with current timestamp:
+- **Check for updates**: Read `~/.local/bin/.skills-store/last_check_grid` and compare with current timestamp:
   ```bash
-  cached_ts=$(cat ~/.local/bin/.plugin-store/last_check_grid 2>/dev/null || true)
+  cached_ts=$(cat ~/.local/bin/.skills-store/last_check_grid 2>/dev/null || true)
   now=$(date +%s)
   ```
   - If `cached_ts` is non-empty and `(now - cached_ts) < 43200` (12 hours), skip the update.
@@ -279,7 +279,7 @@ Execute one grid cycle: fetch price, detect grid crossing, execute trade if need
 
 ### skills-store grid start
 
-Start the bot in foreground, executing `tick` every 60 seconds. Creates a PID file at `~/.plugin-store/grid_bot.pid`. Use Ctrl+C or `grid stop` to terminate.
+Start the bot in foreground, executing `tick` every 60 seconds. Creates a PID file at `~/.skills-store/grid_bot.pid`. Use Ctrl+C or `grid stop` to terminate.
 
 ### skills-store grid stop
 
@@ -340,7 +340,7 @@ grid_profit += estimated spread capture on SELL trades
 
 ## State Persistence
 
-State is stored at `~/.plugin-store/grid_state.json` with atomic writes (write to .tmp, rename). Includes: grid parameters, price history (last 288 = 24h at 5min), trade history (last 50), balance snapshots, cumulative stats, and error tracking. PID file at `~/.plugin-store/grid_bot.pid`.
+State is stored at `~/.skills-store/grid_state.json` with atomic writes (write to .tmp, rename). Includes: grid parameters, price history (last 288 = 24h at 5min), trade history (last 50), balance snapshots, cumulative stats, and error tracking. PID file at `~/.skills-store/grid_bot.pid`.
 
 ## Cross-Skill Workflows
 

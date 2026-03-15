@@ -58,9 +58,9 @@ which plugin-store
   curl -sSL https://raw.githubusercontent.com/purong-huang-1121/skills-store/main/install.sh | sh
   ```
 
-- **Check for updates**: Read `~/.local/bin/.plugin-store/last_check_ranking_sniper` and compare with current timestamp:
+- **Check for updates**: Read `~/.local/bin/.skills-store/last_check_ranking_sniper` and compare with current timestamp:
   ```bash
-  cached_ts=$(cat ~/.local/bin/.plugin-store/last_check_ranking_sniper 2>/dev/null || true)
+  cached_ts=$(cat ~/.local/bin/.skills-store/last_check_ranking_sniper 2>/dev/null || true)
   now=$(date +%s)
   ```
   - If `cached_ts` is non-empty and `(now - cached_ts) < 43200` (12 hours), skip the update.
@@ -135,7 +135,7 @@ TELEGRAM_BOT_TOKEN=...   # Telegram bot token for trade/error notifications
 TELEGRAM_CHAT_ID=...     # Telegram chat ID for alerts
 ```
 
-Telegram credentials can also be set in the config file (`~/.plugin-store/ranking_sniper_config.json`).
+Telegram credentials can also be set in the config file (`~/.skills-store/ranking_sniper_config.json`).
 
 ## Before Starting the Bot
 
@@ -143,7 +143,7 @@ Telegram credentials can also be set in the config file (`~/.plugin-store/rankin
 
 1. Run `skills-store ranking-sniper config` to show the user their current parameters
 2. Present the parameters in a readable table and ask if they want to adjust any
-3. If the user wants to change parameters, edit the config file at `~/.plugin-store/ranking_sniper_config.json` directly
+3. If the user wants to change parameters, edit the config file at `~/.skills-store/ranking_sniper_config.json` directly
 4. Parameters are persisted across restarts
 
 Example flow:
@@ -326,7 +326,7 @@ Priority order (first match exits):
 
 ## Configurable Parameters
 
-Parameters are persisted at `~/.plugin-store/ranking_sniper_config.json`. View with `skills-store ranking-sniper config`. Edit the JSON file directly to change values.
+Parameters are persisted at `~/.skills-store/ranking_sniper_config.json`. View with `skills-store ranking-sniper config`. Edit the JSON file directly to change values.
 
 ### Money Management
 
@@ -408,7 +408,7 @@ skills-store ranking-sniper tick [--budget <sol>] [--per-trade <sol>] [--dry-run
 
 ### skills-store ranking-sniper start
 
-Start the bot in foreground, executing `tick` every 10 seconds. Creates a PID file at `~/.plugin-store/ranking_sniper.pid`. Use Ctrl+C or `ranking-sniper stop` to terminate. Logs to `~/.plugin-store/ranking_sniper.log`.
+Start the bot in foreground, executing `tick` every 10 seconds. Creates a PID file at `~/.skills-store/ranking_sniper.pid`. Use Ctrl+C or `ranking-sniper stop` to terminate. Logs to `~/.skills-store/ranking_sniper.log`.
 
 ```bash
 skills-store ranking-sniper start [--budget <sol>] [--per-trade <sol>] [--dry-run]
@@ -715,14 +715,14 @@ fetch_ranking(top_n=20)              <- OKX /token/toplist (sort by 5m change)
 
 ## State Persistence
 
-State is stored at `~/.plugin-store/ranking_sniper_state.json` with atomic writes (write to `.tmp`, rename).
+State is stored at `~/.skills-store/ranking_sniper_state.json` with atomic writes (write to `.tmp`, rename).
 
 | File | Purpose |
 |------|---------|
-| `~/.plugin-store/ranking_sniper_state.json` | Full bot state (positions, trades, stats, known tokens) |
-| `~/.plugin-store/ranking_sniper_config.json` | User-configurable parameters |
-| `~/.plugin-store/ranking_sniper.pid` | PID file for running bot |
-| `~/.plugin-store/ranking_sniper.log` | Execution log |
+| `~/.skills-store/ranking_sniper_state.json` | Full bot state (positions, trades, stats, known tokens) |
+| `~/.skills-store/ranking_sniper_config.json` | User-configurable parameters |
+| `~/.skills-store/ranking_sniper.pid` | PID file for running bot |
+| `~/.skills-store/ranking_sniper.log` | Execution log |
 
 State includes:
 - `known_tokens` — Set of all token addresses ever seen (prevents re-entry)
@@ -778,7 +778,7 @@ State includes:
 |---------|-------|-----|
 | "SOL_ADDRESS not set" | Missing env var | Set `SOL_ADDRESS` to your Solana wallet address |
 | "SOL_PRIVATE_KEY not set" | Missing env var | Set `SOL_PRIVATE_KEY` (base58, 32 or 64 bytes) |
-| Circuit breaker trips | Repeated API/swap failures | Check logs at `~/.plugin-store/ranking_sniper.log`, fix root cause, wait 1h or reset |
+| Circuit breaker trips | Repeated API/swap failures | Check logs at `~/.skills-store/ranking_sniper.log`, fix root cause, wait 1h or reset |
 | No buys happening | Score threshold too high, or safety filters too strict | Try `--dry-run` to see skip reasons, adjust config thresholds |
 | All tokens skipped by slot_guard | Thresholds set to production values | For testing, lower `min_change_pct`, `min_liquidity`, `min_holders`, etc. |
 | Sell fails repeatedly | Low liquidity token | Use `sell-all` (auto-retries with halved amounts) or manual `sell` |

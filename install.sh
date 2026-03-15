@@ -10,7 +10,7 @@ set -e
 # Behavior:
 #   - Fresh install: detect platform, download latest binary, verify, install.
 #   - Already installed: skip if the same version was verified within the
-#     last 12 hours (cache at ~/.local/bin/.plugin-store/last_check). Otherwise, compare the
+#     last 12 hours (cache at ~/.local/bin/.skills-store/last_check). Otherwise, compare the
 #     local version with the latest GitHub release and upgrade if needed.
 #
 # Supported platforms:
@@ -21,7 +21,7 @@ set -e
 REPO="purong-huang-1121/skills-store"
 BINARY="skills-store"
 INSTALL_DIR="$HOME/.cargo/bin"
-CACHE_DIR="$HOME/.local/bin/.plugin-store"
+CACHE_DIR="$HOME/.local/bin/.skills-store"
 CACHE_FILE="$CACHE_DIR/last_check"
 CACHE_TTL=43200  # 12 hours in seconds
 
