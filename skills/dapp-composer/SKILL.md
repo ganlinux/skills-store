@@ -1,15 +1,43 @@
 ---
 name: dapp-composer
 description: >-
-  This skill should be used when the user asks about on-chain earning opportunities,
-  'how to make money on-chain', 'any profitable strategies', 'arbitrage opportunities',
+  This is the main on-chain DeFi skill. Use it for ALL of the following:
+
+  Strategy discovery: 'how to make money on-chain', 'any profitable strategies',
   '链上有什么赚钱机会', '有什么盈利机会', '有什么套利机会', '怎么赚钱', '有什么好的策略',
   '帮我理财', '有什么收益机会', 'yield opportunities', 'how to earn', 'investment strategy',
-  'DeFi 策略推荐', '有什么自动化策略', 'automated strategies', 'passive income on-chain',
-  or mentions looking for on-chain profit, yield, or automated trading opportunities.
-  This is a strategy discovery and routing skill — it presents available built-in strategies
-  and routes users to the correct skill. Do NOT use for single-protocol operations
-  (use plugin-store aave, plugin-store hyperliquid, etc. directly).
+  'DeFi 策略推荐', '有什么自动化策略', 'automated strategies', 'passive income on-chain'.
+
+  Capability discovery: '你能做什么', '你有什么能力', '你支持什么', '有什么技能', '都有什么功能',
+  '支持哪些策略', '支持哪些 skill', 'what skills are available', 'what can you do',
+  'what strategies do you support', 'show me all strategies', 'list all skills'.
+
+  Aave V3 lending: 'Aave', 'supply to Aave', 'deposit into Aave', 'withdraw from Aave',
+  'Aave APY', 'Aave markets', 'lending rates', 'health factor', 'borrow on Aave',
+  'repay Aave', 'DeFi lending', 'Aave V3'.
+
+  Morpho lending: 'Morpho', 'Morpho Blue', 'MetaMorpho vaults', 'Morpho lending rates',
+  'Morpho markets', 'deposit into Morpho', 'withdraw from Morpho', 'Morpho positions',
+  'ERC-4626 vaults'.
+
+  Uniswap swaps: 'Uniswap', 'swap on Uniswap', 'Uniswap V3 swap', 'Uniswap quote',
+  'swap WETH for USDC on Uniswap', 'trade tokens on Uniswap', 'Uniswap fee tiers',
+  'on-chain token swap', 'concentrated liquidity swap'.
+
+  Hyperliquid trading: 'Hyperliquid', 'perpetual futures', 'open a long position',
+  'short BTC', 'check my perp positions', 'funding rate', 'Hyperliquid orderbook',
+  'spot trade on Hyperliquid', 'set leverage', 'perp trading'.
+
+  Ethena staking: 'Ethena', 'sUSDe', 'USDe staking', 'sUSDe yield', 'sUSDe APY',
+  'stake USDe', 'unstake sUSDe', 'Ethena balance', 'sUSDe exchange rate', 'cooldown period'.
+
+  Polymarket: 'prediction markets', 'event betting', 'what are the odds', 'bet on',
+  'buy Yes/No shares', 'Polymarket positions', 'prediction market prices', 'Polymarket'.
+
+  Kalshi: 'Kalshi', 'US prediction markets', 'regulated event contracts', 'Kalshi positions',
+  'Kalshi balance', 'federally authorized prediction markets'.
+
+  Also activates when the skill has just been installed and the user has not yet chosen a direction.
 license: Apache-2.0
 metadata:
   author: okx
@@ -20,6 +48,71 @@ metadata:
 # On-Chain Strategy Composer
 
 Helps users discover and launch built-in automated strategies. This skill contains no CLI commands — it guides users to choose a strategy and then hands off to the corresponding skill.
+
+---
+
+## Post-Install Welcome & Capability Discovery
+
+### Trigger
+
+Activate this section when ANY of the following is true:
+- The skill was **just installed** (user ran `/install dapp-composer` or equivalent) and hasn't asked a specific question yet
+- User asks **"你能做什么"**, **"你有什么能力"**, **"支持哪些策略"**, **"有什么 skill"**, **"what can you do"**, **"what skills are available"**, **"show me all strategies"**, or any similar capability/discovery query
+- User asks **"都有哪些插件"**, **"都有什么功能"**, **"你支持什么"**
+
+### Response
+
+Present the following welcome message:
+
+```
+你好！我支持以下能力，每个能力都是一个独立的 skill，可按需安装：
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  📦 dApp 技能（已内置，直接可用）
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  • dapp-aave        Aave V3 借贷 — 存款、借款、还款、查利率
+  • dapp-morpho      Morpho 借贷 — Vault 管理、借贷市场
+  • dapp-uniswap     Uniswap V3 — 链上 swap、报价
+  • dapp-hyperliquid 永续合约 + 现货 — 开平仓、funding rate
+  • dapp-ethena      sUSDe 质押收益
+  • dapp-polymarket  预测市场下注
+  • dapp-kalshi      合规预测市场（美国）
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  🤖 自动化策略技能（需单独安装）
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  A. strategy-auto-rebalance   ⭐ 低风险
+     USDC 智能调仓 — 自动在 Aave/Compound/Morpho 间寻找最优收益
+     支持链：Base、Ethereum | 预估年化：3%~8%
+
+  B. strategy-grid-trade       ⭐⭐ 中低风险
+     ETH/USDC 网格交易 — 震荡行情自动低买高卖
+     支持链：Base | 预估年化：10%~30%
+
+  C. strategy-ranking-sniper   ⭐⭐⭐ 高风险
+     SOL 涨幅榜狙击 — 实时监控榜单动量自动买入
+     支持链：Solana | 每 10 秒轮询，25 项风控
+
+  D. strategy-signal-tracker   ⭐⭐⭐ 高风险
+     SOL 聪明钱跟单 — 跟随 SmartMoney/KOL/Whale 信号
+     支持链：Solana | 分级仓位 + Session 风控
+
+  E. strategy-memepump-scanner ⭐⭐⭐ 高风险
+     SOL Memepump 扫描 — 捕捉 Pump.fun 迁移后动量爆发
+     支持链：Solana | 三重信号检测
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+安装任意策略技能（示例）：
+  /install strategy-auto-rebalance
+  /install strategy-grid-trade
+
+想了解某个策略的详情，或直接告诉我你想做什么，我来帮你选择！
+```
+
+After presenting the welcome message, wait for the user's response. Do NOT immediately ask follow-up questions — let the user lead.
 
 ## Pre-flight Checks
 
@@ -33,14 +126,17 @@ Same as sub-skills. Run once per session:
 
 ## Skill Routing
 
-### dApp 平台（单一协议操作）
-- User asks about **Aave** (存款、借贷、利率) → use `plugin-store aave`
-- User asks about **Morpho** (vault、借贷) → use `plugin-store morpho`
-- User asks about **Uniswap** (换币、swap、报价) → use `plugin-store uniswap`
-- User asks about **Hyperliquid** (永续合约、funding rate、现货) → use `plugin-store hyperliquid`
-- User asks about **Ethena** (sUSDe、质押、收益) → use `plugin-store ethena`
-- User asks about **Polymarket** (预测市场、下注) → use `plugin-store polymarket`
-- User asks about **Kalshi** (合规预测市场) → use `plugin-store kalshi`
+### 安装后 / 能力查询
+- User **just installed** this skill, or asks **"你能做什么"**, **"有什么技能"**, **"支持哪些策略"**, **"what can you do"**, **"list skills"** → **Show Post-Install Welcome** (see above)
+
+### dApp 平台（已内置，直接执行 plugin-store 命令）
+- User asks about **Aave** (存款、借贷、利率) → see **[Aave V3 CLI Reference]** below, run `plugin-store aave`
+- User asks about **Morpho** (vault、借贷) → see **[Morpho CLI Reference]** below, run `plugin-store morpho`
+- User asks about **Uniswap** (换币、swap、报价) → see **[Uniswap CLI Reference]** below, run `plugin-store uniswap`
+- User asks about **Hyperliquid** (永续合约、funding rate、现货) → see **[Hyperliquid CLI Reference]** below, run `plugin-store hyperliquid`
+- User asks about **Ethena** (sUSDe、质押、收益) → see **[Ethena CLI Reference]** below, run `plugin-store ethena`
+- User asks about **Polymarket** (预测市场、下注) → see **[Polymarket CLI Reference]** below, run `plugin-store polymarket`
+- User asks about **Kalshi** (合规预测市场) → see **[Kalshi CLI Reference]** below, run `plugin-store kalshi`
 
 ### 自动化策略
 - User asks about **grid trading specifically** → use `plugin-store grid`
@@ -798,6 +894,8 @@ TELEGRAM_CHAT_ID=...
 | User asks about other strategies (funding rate, sUSDe loop) | These are not yet built-in — guide user through the steps using individual `plugin-store` commands (`plugin-store aave`, `plugin-store hyperliquid`, `plugin-store ethena`) |
 | Aave 利差为负 (borrow > supply) | Strategy C 不可执行，建议策略 A 或等待利率回归 |
 | 健康因子过低 | 策略 C 循环时自动停止（HF < 1.30），提醒用户去杠杆 |
+| User just installed dapp-composer with no follow-up | Show Post-Install Welcome listing all skills |
+| User asks "你能做什么" / "what can you do" / "有什么 skill" | Show Post-Install Welcome listing all skills |
 | User asks about a specific dApp platform | Route to the corresponding `plugin-store <dapp>` command directly |
 | User asks "支持哪些平台/协议" | Show the dApp platform table |
 | User says "哪个更好" | Use the comparison table; recommend A for conservative, D/E/F for aggressive Meme 玩家 |
@@ -807,3 +905,331 @@ TELEGRAM_CHAT_ID=...
 | plugin-store 未安装 | 引导安装: `curl -sSL .../install.sh \| sh` |
 | SOL_PRIVATE_KEY not set | Show setup instructions, warn about Meme 币高风险 |
 | User asks "哪个 Solana 策略更好" | D 最稳（榜单动量）、E 最聪明（跟单）、F 最激进（Pump.fun），建议小额分散测试 |
+
+---
+
+# dApp CLI References (Built-in)
+
+The following dApp commands are all available via the `plugin-store` binary after running the Pre-flight Check above.
+
+---
+
+## [Aave V3 CLI Reference]
+
+7 commands for lending market data, reserve details, account positions, supply/withdraw, and borrow/repay operations.
+
+### Authentication
+
+- **Data commands** (`markets`, `reserve`, `account`): No auth needed.
+- **Transaction commands** (`supply`, `withdraw`, `borrow`, `repay`): Require `EVM_PRIVATE_KEY` in `.env`.
+
+### Command Index
+
+| # | Command | Auth | Description |
+|---|---------|------|-------------|
+| 1 | `plugin-store aave markets --chain <chain>` | No | List all Aave V3 reserve markets |
+| 2 | `plugin-store aave reserve <symbol> --chain <chain>` | No | Get reserve APY, liquidity, config |
+| 3 | `plugin-store aave account <address> --chain <chain>` | No | View positions, health factor, borrowing power |
+| 4 | `plugin-store aave supply --token <symbol> --amount <n> --chain <chain>` | Yes | Supply assets to earn yield |
+| 5 | `plugin-store aave withdraw --token <symbol> --amount <n\|max> --chain <chain>` | Yes | Withdraw supplied assets |
+| 6 | `plugin-store aave borrow --token <symbol> --amount <n> --chain <chain>` | Yes | Borrow against collateral |
+| 7 | `plugin-store aave repay --token <symbol> --amount <n\|max> --chain <chain>` | Yes | Repay borrowed assets |
+
+**Supported chains:** ethereum, polygon, arbitrum, base
+
+### Key Concepts
+
+- **Health Factor**: Must stay > 1.0 or position is liquidatable. Recommended > 1.5.
+- **aTokens**: Receipt tokens received when supplying (e.g. supply USDC → receive aUSDC). Balance grows automatically.
+- **LTV**: Max borrow value as % of collateral value (e.g. 80% LTV = borrow up to 80% of collateral).
+- **Use `max`** for full withdrawal or full repayment.
+
+### Quickstart
+
+```bash
+plugin-store aave markets --chain ethereum
+plugin-store aave reserve USDC --chain ethereum
+plugin-store aave account 0xYourAddress --chain ethereum
+plugin-store aave supply --token USDC --amount 100 --chain ethereum
+plugin-store aave withdraw --token USDC --amount max --chain ethereum
+plugin-store aave borrow --token USDC --amount 500 --chain ethereum
+plugin-store aave repay --token USDC --amount max --chain ethereum
+```
+
+### Edge Cases
+
+- Health factor risk: warn if resulting HF < 1.5 after withdraw/borrow.
+- First-time supply requires ERC-20 approval (handled automatically, extra gas).
+- Use `--amount max` to repay full debt including accrued interest.
+- Unsupported chain → error listing supported chains.
+
+---
+
+## [Morpho CLI Reference]
+
+5 commands for Morpho Blue lending markets, MetaMorpho vaults, and user positions.
+
+### Authentication
+
+- **All query commands** (`markets`, `market`, `vaults`, `vault`, `positions`): No auth needed.
+- **On-chain vault operations** (deposit/withdraw): Require `EVM_PRIVATE_KEY` in `.env`.
+
+### Command Index
+
+| # | Command | Auth | Description |
+|---|---------|------|-------------|
+| 1 | `plugin-store morpho markets [--chain <chain>] [--order-by <field>] [--direction <dir>]` | No | List Morpho Blue markets with APY and TVL |
+| 2 | `plugin-store morpho market <unique_key> [--chain-id <id>]` | No | Get detailed market data |
+| 3 | `plugin-store morpho vaults [--chain <chain>] [--order-by <field>] [--direction <dir>]` | No | List MetaMorpho vaults |
+| 4 | `plugin-store morpho vault <address> [--chain-id <id>]` | No | Get detailed vault data |
+| 5 | `plugin-store morpho positions <address> [--chain <chain>]` | No | View wallet positions |
+
+**Supported chains:** ethereum, base, arbitrum, optimism, polygon  
+**Chain IDs:** 1=Ethereum, 8453=Base, 42161=Arbitrum, 10=Optimism, 137=Polygon  
+**Order-by (markets):** SupplyAssetsUsd, BorrowAssetsUsd, Utilization, SupplyApy, BorrowApy  
+**Order-by (vaults):** TotalAssetsUsd, TotalAssets, Apy, NetApy, Name
+
+### Key Concepts
+
+- **Morpho Blue**: Permissionless isolated lending markets — each market has its own params, no shared risk.
+- **MetaMorpho Vaults**: ERC-4626 vaults aggregating deposits across multiple markets, managed by curators.
+- **Net APY vs Gross APY**: Net APY subtracts the vault's performance fee. Always compare using Net APY.
+- **Unique Key**: 32-byte hex identifying a Morpho Blue market — use for `market` command.
+
+### Quickstart
+
+```bash
+plugin-store morpho markets --chain base --order-by SupplyApy --direction Desc
+plugin-store morpho market 0xb323...86cc --chain-id 1
+plugin-store morpho vaults --chain ethereum --order-by NetApy --direction Desc
+plugin-store morpho vault 0xBEEF...F378 --chain-id 1
+plugin-store morpho positions 0xYourAddress --chain base
+```
+
+---
+
+## [Uniswap CLI Reference]
+
+3 commands for swap quotes, swap execution, and token lookup on Uniswap V3.
+
+### Authentication
+
+- **`tokens`**: No auth needed.
+- **`quote`**: Requires `EVM_PRIVATE_KEY` (reads on-chain QuoterV2 contract — no gas spent).
+- **`swap`**: Requires `EVM_PRIVATE_KEY` (signs and broadcasts transaction).
+
+### Command Index
+
+| # | Command | Auth | Description |
+|---|---------|------|-------------|
+| 1 | `plugin-store uniswap quote --from <token> --to <token> --amount <n> [--chain <chain>] [--fee <bps>]` | Yes* | Get estimated swap output without executing |
+| 2 | `plugin-store uniswap swap --from <token> --to <token> --amount <n> [--chain <chain>] [--fee <bps>] [--slippage <bps>]` | Yes | Execute on-chain swap |
+| 3 | `plugin-store uniswap tokens [--chain <chain>]` | No | List well-known token symbols and addresses |
+
+**Supported chains:** arbitrum (default), ethereum, polygon  
+**Fee tiers:** 100 (0.01%), 500 (0.05%), 3000 (0.3%), 10000 (1%)  
+**Default slippage:** 50 bps (0.5%)
+
+### Available Tokens
+
+| Chain | Tokens |
+|---|---|
+| Arbitrum | WETH, USDC, USDC.e, USDT, wstETH, weETH, WBTC, ARB |
+| Ethereum | WETH, USDC, USDT, wstETH, weETH, WBTC, DAI, sUSDe, USDe |
+| Polygon | WETH, USDC, USDT, WMATIC, wstETH |
+
+### Key Concepts
+
+- **Fee Tiers**: Correlated pairs (WETH/wstETH) use 100 bps; standard pairs (WETH/USDC) use 3000 bps.
+- **Slippage**: Default 50 bps. For large/illiquid swaps, use `--slippage 100` or higher.
+- **ERC-20 Approval**: First swap of a token requires approval (auto-handled, extra gas).
+- **Unknown token**: Use contract address `0x...` directly if symbol not in well-known list.
+
+### Quickstart
+
+```bash
+plugin-store uniswap tokens --chain arbitrum
+plugin-store uniswap quote --from WETH --to wstETH --amount 0.05
+plugin-store uniswap swap --from WETH --to wstETH --amount 0.05
+plugin-store uniswap swap --from USDC --to WETH --amount 100 --chain ethereum --fee 3000
+```
+
+---
+
+## [Hyperliquid CLI Reference]
+
+11 commands for perpetual futures and spot trading on Hyperliquid.
+
+### Authentication
+
+- **Data commands** (`markets`, `spot-markets`, `price`, `orderbook`, `funding`): No auth needed.
+- **Trading commands** (`buy`, `sell`, `cancel`, `positions`, `balances`, `orders`): Require `EVM_PRIVATE_KEY` in `.env` (signs EIP-712 typed data for Hyperliquid L1).
+
+### Command Index
+
+| # | Command | Auth | Description |
+|---|---------|------|-------------|
+| 1 | `plugin-store hyperliquid markets` | No | List perpetual markets (price, leverage, volume) |
+| 2 | `plugin-store hyperliquid spot-markets` | No | List spot markets |
+| 3 | `plugin-store hyperliquid price <symbol>` | No | Real-time mid price |
+| 4 | `plugin-store hyperliquid orderbook <symbol>` | No | L2 order book snapshot |
+| 5 | `plugin-store hyperliquid funding <symbol>` | No | Current and historical funding rates |
+| 6 | `plugin-store hyperliquid buy --symbol <s> --size <n> --price <p> [--leverage <l>]` | Yes | Buy / open long |
+| 7 | `plugin-store hyperliquid sell --symbol <s> --size <n> --price <p>` | Yes | Sell / open short |
+| 8 | `plugin-store hyperliquid cancel --symbol <s> --order-id <oid>` | Yes | Cancel an open order |
+| 9 | `plugin-store hyperliquid positions` | Yes | View perpetual positions |
+| 10 | `plugin-store hyperliquid balances` | Yes | View USDC margin and spot balances |
+| 11 | `plugin-store hyperliquid orders [--symbol <s>]` | Yes | List open orders |
+
+### Key Concepts
+
+- **Funding Rate**: Hourly payment between longs/shorts. Positive = longs pay shorts.
+- **Cross Margin**: All positions share the same USDC margin pool.
+- **szDecimals**: Each asset has required size precision (e.g. BTC = 5 decimal places). Use `markets` to check.
+- **Liquidation Price**: Monitor closely — cross margin means losses in one position affect all others.
+
+### Quickstart
+
+```bash
+plugin-store hyperliquid markets
+plugin-store hyperliquid funding BTC
+plugin-store hyperliquid price BTC
+plugin-store hyperliquid buy --symbol BTC --size 0.01 --price 65000 --leverage 10
+plugin-store hyperliquid positions
+plugin-store hyperliquid sell --symbol BTC --size 0.01 --price 66000
+```
+
+---
+
+## [Ethena CLI Reference]
+
+5 commands for sUSDe yield-bearing stablecoin on Ethereum mainnet.
+
+### Authentication
+
+- **`apy`, `balance`**: No auth needed.
+- **`stake`, `cooldown`, `unstake`**: Require `EVM_PRIVATE_KEY` in `.env` (Ethereum mainnet, ETH for gas).
+
+### Command Index
+
+| # | Command | Auth | Description |
+|---|---------|------|-------------|
+| 1 | `plugin-store ethena apy` | No | sUSDe exchange rate, total assets, cooldown duration |
+| 2 | `plugin-store ethena balance <address>` | No | USDe and sUSDe balances for a wallet |
+| 3 | `plugin-store ethena stake --amount <n>` | Yes | Deposit USDe → receive sUSDe shares |
+| 4 | `plugin-store ethena cooldown --amount <n>` | Yes | Initiate 7-day unstake cooldown (amount in USDe terms) |
+| 5 | `plugin-store ethena unstake` | Yes | Withdraw USDe after cooldown completes |
+
+### Key Concepts
+
+- **Exchange Rate**: 1 sUSDe = X USDe (grows over time as yield accrues).
+- **Cooldown Period**: 7 days. Must call `cooldown` first, wait 7 days, then call `unstake`.
+- **Yield Source**: Ethena delta-neutral strategy (spot ETH + short perp) distributes funding income to sUSDe holders. APY ~8–15% historically.
+- **sUSDe on L2**: Can buy sUSDe on L2 DEXes (cheaper gas), but staking/unstaking only on Ethereum mainnet.
+
+### Quickstart
+
+```bash
+plugin-store ethena apy
+plugin-store ethena balance 0xYourAddress
+plugin-store ethena stake --amount 1000
+plugin-store ethena cooldown --amount 500
+plugin-store ethena unstake
+```
+
+---
+
+## [Polymarket CLI Reference]
+
+12 commands for prediction market search, pricing, and trading on Polygon.
+
+### Authentication
+
+- **Data commands** (`search`, `markets`, `event`, `price`, `book`, `history`): No auth needed.
+- **Trading commands** (`buy`, `sell`, `cancel`, `orders`, `positions`, `balance`): Require `EVM_PRIVATE_KEY` in `.env` (Polygon wallet). API credentials auto-derived and cached at `~/.plugin-store/polymarket_creds.json`.
+
+### Command Index
+
+| # | Command | Auth | Description |
+|---|---------|------|-------------|
+| 1 | `plugin-store polymarket search <query> [--limit <n>]` | No | Search prediction markets |
+| 2 | `plugin-store polymarket markets [--tag <tag>] [--sort <sort>] [--limit <n>]` | No | List popular/active markets |
+| 3 | `plugin-store polymarket event <event_id>` | No | Get event details with related markets |
+| 4 | `plugin-store polymarket price <token_id>` | No | Get Yes/No price, midpoint, spread |
+| 5 | `plugin-store polymarket book <token_id>` | No | View orderbook depth |
+| 6 | `plugin-store polymarket history <token_id> [--interval <1m\|1h\|1d\|1w>]` | No | Price history |
+| 7 | `plugin-store polymarket buy --token <id> --amount <usdc> --price <0-1>` | Yes | Buy outcome shares |
+| 8 | `plugin-store polymarket sell --token <id> --amount <shares> --price <0-1>` | Yes | Sell outcome shares |
+| 9 | `plugin-store polymarket cancel <order_id>` | Yes | Cancel an open order |
+| 10 | `plugin-store polymarket orders [--market <id>]` | Yes | View open orders |
+| 11 | `plugin-store polymarket positions` | Yes | View current positions |
+| 12 | `plugin-store polymarket balance` | Yes | View USDC balance |
+
+### Key Concepts
+
+- **Prices are probabilities**: Price 0.65 = 65% implied probability. Win pays $1.00 per share.
+- **Two token IDs per market**: `clobTokenIds[0]` = Yes, `clobTokenIds[1]` = No.
+- **CLOB model**: Central limit order book — orders may not fill immediately.
+- **USDC on Polygon**: All trading uses USDC on Polygon network.
+
+### Quickstart
+
+```bash
+plugin-store polymarket markets --sort volume --limit 10
+plugin-store polymarket search "bitcoin"
+plugin-store polymarket price <token_id>
+plugin-store polymarket buy --token <token_id> --amount 100 --price 0.65
+plugin-store polymarket positions
+```
+
+---
+
+## [Kalshi CLI Reference]
+
+12 commands for US-regulated prediction market trading across demo and production environments.
+
+### Authentication
+
+- **Data commands** (`search`, `markets`, `event`, `price`, `book`, `history`): No auth needed.
+- **Trading commands** (`buy`, `sell`, `cancel`, `orders`, `positions`, `balance`): Require Kalshi RSA API credentials:
+  ```bash
+  KALSHI_KEY_ID=your-key-id
+  KALSHI_PRIVATE_KEY_PEM=/path/to/private_key.pem
+  ```
+  Get API keys at: https://kalshi.com/profile/api-keys
+
+**Important:** Default environment is `demo` (paper trading). Use `--env prod` for real trades. KYC required for production (US residents only).
+
+### Command Index
+
+| # | Command | Auth | Description |
+|---|---------|------|-------------|
+| 1 | `plugin-store kalshi [--env demo\|prod] search <query>` | No | Search events and markets |
+| 2 | `plugin-store kalshi [--env demo\|prod] markets [--sort <sort>] [--limit <n>]` | No | List popular/active markets |
+| 3 | `plugin-store kalshi [--env demo\|prod] event <event_ticker>` | No | Get event with related markets |
+| 4 | `plugin-store kalshi [--env demo\|prod] price <ticker>` | No | Get Yes/No price and probability |
+| 5 | `plugin-store kalshi [--env demo\|prod] book <ticker>` | No | View orderbook depth |
+| 6 | `plugin-store kalshi [--env demo\|prod] history <ticker> [--interval <1m\|1h\|1d\|1w>]` | No | Price history |
+| 7 | `plugin-store kalshi [--env demo\|prod] buy --ticker <t> --side <yes\|no> --count <n> --price <0-1>` | Yes | Buy outcome contracts |
+| 8 | `plugin-store kalshi [--env demo\|prod] sell --ticker <t> --side <yes\|no> --count <n> --price <0-1>` | Yes | Sell outcome contracts |
+| 9 | `plugin-store kalshi [--env demo\|prod] cancel <order_id>` | Yes | Cancel an open order |
+| 10 | `plugin-store kalshi [--env demo\|prod] orders [--ticker <t>]` | Yes | View open orders |
+| 11 | `plugin-store kalshi [--env demo\|prod] positions` | Yes | View current positions |
+| 12 | `plugin-store kalshi [--env demo\|prod] balance` | Yes | View USD account balance |
+
+### Key Concepts
+
+- **Prices in cents**: Price 65 = 65% probability. Buy Yes at 65 cents → pay $0.65/contract, win $1.00 if Yes.
+- **Count vs Amount**: Specify `--count` (number of contracts), not a USD amount. Each contract = $1 face value.
+- **Demo first**: Always test with `--env demo` before using `--env prod`.
+- **Kalshi vs Polymarket**: Kalshi = US licensed, KYC required, USD. Polymarket = decentralized, no KYC, USDC on Polygon.
+
+### Quickstart
+
+```bash
+plugin-store kalshi markets
+plugin-store kalshi search "fed rate"
+plugin-store kalshi price FED-24DEC-T5.25
+plugin-store kalshi buy --ticker FED-24DEC-T5.25 --side yes --count 10 --price 0.65
+plugin-store kalshi --env prod buy --ticker FED-24DEC-T5.25 --side yes --count 10 --price 0.65
+```

@@ -1,15 +1,5 @@
-#![allow(dead_code)]
-
-pub mod chains;
-mod client;
-mod commands;
-mod config;
-mod dapp;
-pub mod notifier;
-mod output;
-mod strategy;
-
 use clap::{Parser, Subcommand, ValueEnum};
+use plugin_store_cli::{commands, dapp, output};
 
 #[derive(Parser)]
 #[command(
@@ -75,35 +65,10 @@ pub enum Commands {
         #[command(subcommand)]
         command: commands::dapp_morpho::MorphoCommand,
     },
-    /// Auto-rebalance USDC across Aave, Compound, Morpho
-    AutoRebalance {
-        #[command(subcommand)]
-        command: commands::strategy_auto_rebalance::AutoRebalanceCommand,
-    },
-    /// ETH/USDC grid trading bot on Base
-    Grid {
-        #[command(subcommand)]
-        command: commands::strategy_grid::GridCommand,
-    },
     /// Uniswap V3 on-chain swap and quote
     Uniswap {
         #[command(subcommand)]
         command: commands::dapp_uniswap::UniswapCommand,
-    },
-    /// SOL ranking sniper — buy trending Solana tokens with safety checks
-    RankingSniper {
-        #[command(subcommand)]
-        command: commands::strategy_ranking_sniper::RankingSniperCommand,
-    },
-    /// SOL signal tracker — follow smart money signals with safety filter
-    SignalTracker {
-        #[command(subcommand)]
-        command: commands::strategy_signal_tracker::SignalTrackerCommand,
-    },
-    /// SOL memepump scanner — automated pump.fun token trading
-    Scanner {
-        #[command(subcommand)]
-        command: commands::strategy_memepump_scanner::ScannerCommand,
     },
 }
 
@@ -130,20 +95,7 @@ async fn main() {
         Commands::Kalshi { env, command } => commands::dapp_kalshi::execute(command, env).await,
         Commands::Ethena { command } => commands::dapp_ethena::execute(command).await,
         Commands::Morpho { command } => commands::dapp_morpho::execute(command).await,
-        Commands::AutoRebalance { command } => {
-            commands::strategy_auto_rebalance::execute(command).await
-        }
-        Commands::Grid { command } => commands::strategy_grid::execute(command).await,
         Commands::Uniswap { command } => commands::dapp_uniswap::execute(command).await,
-        Commands::RankingSniper { command } => {
-            commands::strategy_ranking_sniper::execute(command).await
-        }
-        Commands::SignalTracker { command } => {
-            commands::strategy_signal_tracker::execute(command).await
-        }
-        Commands::Scanner { command } => {
-            commands::strategy_memepump_scanner::execute(command).await
-        }
     };
 
     if let Err(e) = result {

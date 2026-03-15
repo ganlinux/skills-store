@@ -8,6 +8,26 @@ rust-version = "1.75"
 name = "plugin-store"
 path = "src/main.rs"
 
+[[bin]]
+name = "strategy-auto-rebalance"
+path = "src/bin/strategy_auto_rebalance.rs"
+
+[[bin]]
+name = "strategy-grid"
+path = "src/bin/strategy_grid.rs"
+
+[[bin]]
+name = "strategy-memepump-scanner"
+path = "src/bin/strategy_memepump_scanner.rs"
+
+[[bin]]
+name = "strategy-ranking-sniper"
+path = "src/bin/strategy_ranking_sniper.rs"
+
+[[bin]]
+name = "strategy-signal-tracker"
+path = "src/bin/strategy_signal_tracker.rs"
+
 [dependencies]
 clap = { version = "4", features = ["derive"] }
 tokio = { version = "1", features = ["macros", "rt-multi-thread", "sync", "signal", "time"] }
