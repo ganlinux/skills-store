@@ -1,8 +1,8 @@
-//! Integration tests for `plugin-store aave` commands.
+//! Integration tests for `skills-store aave` commands.
 
 mod common;
 
-use common::{assert_ok_and_extract_data, plugin_store, run_with_retry};
+use common::{assert_ok_and_extract_data, skills_store, run_with_retry};
 use predicates::prelude::*;
 
 // ─── markets ────────────────────────────────────────────────────────
@@ -20,7 +20,7 @@ fn aave_markets_returns_data() {
 
 #[test]
 fn aave_markets_invalid_chain() {
-    let output = plugin_store()
+    let output = skills_store()
         .args(["aave", "markets", "--chain", "fantom"])
         .output()
         .expect("failed to execute");
@@ -42,7 +42,7 @@ fn aave_reserve_usdc() {
 
 #[test]
 fn aave_reserve_not_found() {
-    let output = plugin_store()
+    let output = skills_store()
         .args(["aave", "reserve", "FAKECOIN", "--chain", "ethereum"])
         .output()
         .expect("failed to execute");
@@ -55,7 +55,7 @@ fn aave_reserve_not_found() {
 
 #[test]
 fn aave_account_invalid_address() {
-    let output = plugin_store()
+    let output = skills_store()
         .args(["aave", "account", "not-an-address", "--chain", "ethereum"])
         .output()
         .expect("failed to execute");
@@ -72,7 +72,7 @@ fn aave_supply_missing_private_key_fails() {
         eprintln!("SKIP: EVM_PRIVATE_KEY is set");
         return;
     }
-    let output = plugin_store()
+    let output = skills_store()
         .args([
             "aave", "supply", "--token", "USDC", "--amount", "100", "--chain", "ethereum",
         ])
@@ -92,7 +92,7 @@ fn aave_supply_missing_private_key_fails() {
 
 #[test]
 fn aave_supply_missing_params_fails() {
-    plugin_store()
+    skills_store()
         .args(["aave", "supply"])
         .assert()
         .failure()
@@ -101,7 +101,7 @@ fn aave_supply_missing_params_fails() {
 
 #[test]
 fn aave_withdraw_missing_params_fails() {
-    plugin_store()
+    skills_store()
         .args(["aave", "withdraw"])
         .assert()
         .failure()
