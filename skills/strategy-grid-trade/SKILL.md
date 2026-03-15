@@ -110,64 +110,64 @@ TELEGRAM_CHAT_ID=...    # Telegram chat ID for alerts
 
 ## Before Starting the Bot
 
-**IMPORTANT:** Before running `plugin-store grid start`, you MUST:
+**IMPORTANT:** Before running `skills-store grid start`, you MUST:
 
-1. Run `plugin-store grid config` to show the user their current parameters
+1. Run `skills-store grid config` to show the user their current parameters
 2. Present the parameters in a readable table and ask if they want to adjust any
-3. If the user wants to change a parameter, use `plugin-store grid set --key <name> --value <value>`
+3. If the user wants to change a parameter, use `skills-store grid set --key <name> --value <value>`
 4. Parameters are saved to `grid_config.json` in the same directory as the `plugin-store` executable and persist across restarts — no need to set them every time
 
 Example flow:
 ```bash
 # Show current config
-plugin-store grid config
+skills-store grid config
 
 # User wants to change tick interval
-plugin-store grid set --key tick_interval_secs --value 120
+skills-store grid set --key tick_interval_secs --value 120
 
 # User wants wider position limits
-plugin-store grid set --key position_max_pct --value 70
-plugin-store grid set --key position_min_pct --value 30
+skills-store grid set --key position_max_pct --value 70
+skills-store grid set --key position_min_pct --value 30
 
 # Now start
-plugin-store grid start
+skills-store grid start
 ```
 
 ## Quickstart
 
 ```bash
 # Check market conditions
-plugin-store grid analyze
+skills-store grid analyze
 
 # View current state and PnL
-plugin-store grid status
+skills-store grid status
 
 # Run a single tick (fetch price, detect crossing, trade if needed)
-plugin-store grid tick
+skills-store grid tick
 
 # Start continuous bot (tick every 60 seconds)
-plugin-store grid start
+skills-store grid start
 
 # Stop running bot
-plugin-store grid stop
+skills-store grid stop
 ```
 
 ## Command Index
 
 | # | Command | Auth | Description |
 |---|---------|------|-------------|
-| 1 | `plugin-store grid tick` | Yes | Execute one grid cycle |
-| 2 | `plugin-store grid start` | Yes | Start foreground bot loop (60s ticks) |
-| 3 | `plugin-store grid stop` | No | Stop running bot via PID file |
-| 4 | `plugin-store grid status` | No | Show grid state, balances, PnL |
-| 5 | `plugin-store grid report` | No | Detailed PnL and performance stats |
-| 6 | `plugin-store grid history` | No | Show trade history |
-| 7 | `plugin-store grid reset --force` | No | Clear all grid state |
-| 8 | `plugin-store grid retry` | Yes | Re-execute last failed trade |
-| 9 | `plugin-store grid analyze` | Yes | Market analysis (EMA, volatility, trend) |
-| 10 | `plugin-store grid deposit` | No | Record manual deposit/withdrawal |
-| 11 | `plugin-store grid config` | No | Show current bot configuration |
-| 12 | `plugin-store grid set` | No | Set a config parameter |
+| 1 | `skills-store grid tick` | Yes | Execute one grid cycle |
+| 2 | `skills-store grid start` | Yes | Start foreground bot loop (60s ticks) |
+| 3 | `skills-store grid stop` | No | Stop running bot via PID file |
+| 4 | `skills-store grid status` | No | Show grid state, balances, PnL |
+| 5 | `skills-store grid report` | No | Detailed PnL and performance stats |
+| 6 | `skills-store grid history` | No | Show trade history |
+| 7 | `skills-store grid reset --force` | No | Clear all grid state |
+| 8 | `skills-store grid retry` | Yes | Re-execute last failed trade |
+| 9 | `skills-store grid analyze` | Yes | Market analysis (EMA, volatility, trend) |
+| 10 | `skills-store grid deposit` | No | Record manual deposit/withdrawal |
+| 11 | `skills-store grid config` | No | Show current bot configuration |
+| 12 | `skills-store grid set` | No | Set a config parameter |
 
 ## Core Algorithm
 
@@ -188,9 +188,9 @@ plugin-store grid stop
 
 ## Tunable Parameters
 
-Parameters are persisted at `grid_config.json` in the same directory as the `plugin-store` executable. View with `plugin-store grid config`, modify with `plugin-store grid set --key <key> --value <value>`. Changes take effect on next tick (no rebuild needed). If no config file exists, defaults below are used.
+Parameters are persisted at `grid_config.json` in the same directory as the `plugin-store` executable. View with `skills-store grid config`, modify with `skills-store grid set --key <key> --value <value>`. Changes take effect on next tick (no rebuild needed). If no config file exists, defaults below are used.
 
-The **Key** column shows the exact key name to use with `plugin-store grid set`.
+The **Key** column shows the exact key name to use with `skills-store grid set`.
 
 ### Grid Structure
 
@@ -242,30 +242,30 @@ step = max(step, step_floor)
 
 **Slippage (trades reverting on-chain):**
 ```bash
-plugin-store grid set --key slippage_pct --value 2
+skills-store grid set --key slippage_pct --value 2
 ```
 
 **Wider position limits (allow more one-sided exposure):**
 ```bash
-plugin-store grid set --key position_max_pct --value 75
-plugin-store grid set --key position_min_pct --value 25
+skills-store grid set --key position_max_pct --value 75
+skills-store grid set --key position_min_pct --value 25
 ```
 
 **Faster/slower tick interval:**
 ```bash
-plugin-store grid set --key tick_interval_secs --value 120   # 2 minutes
+skills-store grid set --key tick_interval_secs --value 120   # 2 minutes
 ```
 Note: Restart the bot after changing `tick_interval_secs`.
 
 **Larger trade sizes:**
 ```bash
-plugin-store grid set --key max_trade_pct --value 0.20       # 20% per trade
-plugin-store grid set --key min_trade_usd --value 10         # $10 minimum
+skills-store grid set --key max_trade_pct --value 0.20       # 20% per trade
+skills-store grid set --key min_trade_usd --value 10         # $10 minimum
 ```
 
 ## CLI Command Reference
 
-### plugin-store grid tick
+### skills-store grid tick
 
 Execute one grid cycle: fetch price, detect grid crossing, execute trade if needed.
 
@@ -277,47 +277,47 @@ Execute one grid cycle: fetch price, detect grid crossing, execute trade if need
 - `blocked` — Risk check prevented trade (cooldown, position limit, etc.)
 - `skipped` — Trade amount below minimum
 
-### plugin-store grid start
+### skills-store grid start
 
 Start the bot in foreground, executing `tick` every 60 seconds. Creates a PID file at `~/.plugin-store/grid_bot.pid`. Use Ctrl+C or `grid stop` to terminate.
 
-### plugin-store grid stop
+### skills-store grid stop
 
 Stop a running bot by sending SIGTERM to the process in the PID file.
 
-### plugin-store grid status
+### skills-store grid status
 
 Show current grid state, balances, PnL overview, and whether the bot is running.
 
-### plugin-store grid report
+### skills-store grid report
 
 Detailed performance report: success rate, buy/sell counts, total volume, grid profit, deposits, and portfolio PnL.
 
-### plugin-store grid history [--limit N]
+### skills-store grid history [--limit N]
 
 Show trade history (default: last 50 trades). Each trade includes direction, price, amount, tx hash, and grid levels.
 
-### plugin-store grid reset --force
+### skills-store grid reset --force
 
 Delete all grid state. Requires `--force` flag for safety.
 
-### plugin-store grid retry
+### skills-store grid retry
 
 Re-execute the last failed trade. Validates that price hasn't moved >5% since failure.
 
-### plugin-store grid analyze
+### skills-store grid analyze
 
 Market analysis showing current price, EMA-20, volatility, trend direction, and grid utilization.
 
-### plugin-store grid deposit --amount N [--note "..."]
+### skills-store grid deposit --amount N [--note "..."]
 
 Record a manual deposit (positive) or withdrawal (negative) for accurate PnL tracking.
 
-### plugin-store grid config
+### skills-store grid config
 
 Show all current bot parameters and their values. Indicates whether a custom config file exists.
 
-### plugin-store grid set --key NAME --value VALUE
+### skills-store grid set --key NAME --value VALUE
 
 Set a single parameter. Saved to `grid_config.json` in the executable's directory. Takes effect on next tick (restart bot if already running to apply tick_interval changes).
 
@@ -348,7 +348,7 @@ State is stored at `~/.plugin-store/grid_state.json` with atomic writes (write t
 |---|---|
 | USDC yield optimization (Aave/Compound/Morpho) | `strategy-auto-rebalance` |
 | Aave V3 supply/withdraw/markets | `dapp-aave` |
-| Morpho vault operations | `dapp-morpho` (CLI: `plugin-store morpho`) |
+| Morpho vault operations | `dapp-morpho` (CLI: `skills-store morpho`) |
 | Hyperliquid perpetual trading | `dapp-hyperliquid` |
 | Prediction markets | `dapp-polymarket` / `dapp-kalshi` |
 
@@ -372,9 +372,9 @@ State is stored at `~/.plugin-store/grid_state.json` with atomic writes (write t
 
 | Symptom | Cause | Fix |
 |---|---|---|
-| Trade reverts on-chain (`trade_failed`) | Slippage too low for the DEX route | `plugin-store grid set --key slippage_pct --value 2` (or 3 for volatile periods) |
+| Trade reverts on-chain (`trade_failed`) | Slippage too low for the DEX route | `skills-store grid set --key slippage_pct --value 2` (or 3 for volatile periods) |
 | RPC 429 / rate limit errors | Public Base RPC rate limited | Set `BASE_RPC_URL` env var to a private RPC endpoint |
-| Circuit breaker trips (5 errors) | Repeated failures (RPC, slippage, gas) | Check logs, fix root cause, then wait 1h or `plugin-store grid reset --force` |
+| Circuit breaker trips (5 errors) | Repeated failures (RPC, slippage, gas) | Check logs, fix root cause, then wait 1h or `skills-store grid reset --force` |
 | Bot not trading (no_crossing) | Price within same grid level | Normal — bot only trades when price crosses a grid boundary |
 | Trade blocked: position limit | ETH% too high/low | Adjust `position_max_pct` / `position_min_pct` or manually rebalance |
 | Trade blocked: cooldown | Same-direction trade too soon (30min default) | Lower `min_trade_interval` if you want faster trading |

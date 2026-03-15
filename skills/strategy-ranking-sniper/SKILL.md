@@ -139,9 +139,9 @@ Telegram credentials can also be set in the config file (`~/.plugin-store/rankin
 
 ## Before Starting the Bot
 
-**IMPORTANT:** Before running `plugin-store ranking-sniper start`, you MUST:
+**IMPORTANT:** Before running `skills-store ranking-sniper start`, you MUST:
 
-1. Run `plugin-store ranking-sniper config` to show the user their current parameters
+1. Run `skills-store ranking-sniper config` to show the user their current parameters
 2. Present the parameters in a readable table and ask if they want to adjust any
 3. If the user wants to change parameters, edit the config file at `~/.plugin-store/ranking_sniper_config.json` directly
 4. Parameters are persisted across restarts
@@ -149,56 +149,56 @@ Telegram credentials can also be set in the config file (`~/.plugin-store/rankin
 Example flow:
 ```bash
 # Show current config
-plugin-store ranking-sniper config
+skills-store ranking-sniper config
 
 # Start with custom budget and per-trade amount
-plugin-store ranking-sniper start --budget 1.0 --per-trade 0.1
+skills-store ranking-sniper start --budget 1.0 --per-trade 0.1
 
 # Or start in dry-run mode first to observe
-plugin-store ranking-sniper start --budget 0.5 --per-trade 0.05 --dry-run
+skills-store ranking-sniper start --budget 0.5 --per-trade 0.05 --dry-run
 ```
 
 ## Quickstart
 
 ```bash
 # View current ranking and market conditions
-plugin-store ranking-sniper analyze
+skills-store ranking-sniper analyze
 
 # View current state and positions
-plugin-store ranking-sniper status
+skills-store ranking-sniper status
 
 # Run a single tick (scan ranking, check exits, buy if signal)
-plugin-store ranking-sniper tick --budget 0.5 --per-trade 0.05
+skills-store ranking-sniper tick --budget 0.5 --per-trade 0.05
 
 # Dry-run tick (no real swaps)
-plugin-store ranking-sniper tick --budget 0.5 --per-trade 0.05 --dry-run
+skills-store ranking-sniper tick --budget 0.5 --per-trade 0.05 --dry-run
 
 # Start continuous bot (tick every 10 seconds)
-plugin-store ranking-sniper start --budget 0.5 --per-trade 0.05
+skills-store ranking-sniper start --budget 0.5 --per-trade 0.05
 
 # Stop running bot
-plugin-store ranking-sniper stop
+skills-store ranking-sniper stop
 
 # Emergency: sell all open positions
-plugin-store ranking-sniper sell-all
+skills-store ranking-sniper sell-all
 ```
 
 ## Command Index
 
 | # | Command | Auth | Description |
 |---|---------|------|-------------|
-| 1 | `plugin-store ranking-sniper tick` | Yes | Execute one tick: fetch ranking, check exits, scan new entries |
-| 2 | `plugin-store ranking-sniper start` | Yes | Start foreground bot loop (tick every 10s) |
-| 3 | `plugin-store ranking-sniper stop` | No | Stop running bot via PID file |
-| 4 | `plugin-store ranking-sniper status` | No | Show current state, positions, and PnL |
-| 5 | `plugin-store ranking-sniper report` | No | Detailed PnL and performance report |
-| 6 | `plugin-store ranking-sniper history` | No | Show trade history |
-| 7 | `plugin-store ranking-sniper reset --force` | No | Clear all state data |
-| 8 | `plugin-store ranking-sniper analyze` | No* | Market analysis (current ranking, top tokens) |
-| 9 | `plugin-store ranking-sniper test-trade` | Yes | Buy+sell round-trip for a token (dev/debug) |
-| 10 | `plugin-store ranking-sniper config` | No | Show all configurable parameters |
-| 11 | `plugin-store ranking-sniper sell-all` | Yes | Force-sell all open positions immediately |
-| 12 | `plugin-store ranking-sniper sell` | Yes | Sell a specific token by address |
+| 1 | `skills-store ranking-sniper tick` | Yes | Execute one tick: fetch ranking, check exits, scan new entries |
+| 2 | `skills-store ranking-sniper start` | Yes | Start foreground bot loop (tick every 10s) |
+| 3 | `skills-store ranking-sniper stop` | No | Stop running bot via PID file |
+| 4 | `skills-store ranking-sniper status` | No | Show current state, positions, and PnL |
+| 5 | `skills-store ranking-sniper report` | No | Detailed PnL and performance report |
+| 6 | `skills-store ranking-sniper history` | No | Show trade history |
+| 7 | `skills-store ranking-sniper reset --force` | No | Clear all state data |
+| 8 | `skills-store ranking-sniper analyze` | No* | Market analysis (current ranking, top tokens) |
+| 9 | `skills-store ranking-sniper test-trade` | Yes | Buy+sell round-trip for a token (dev/debug) |
+| 10 | `skills-store ranking-sniper config` | No | Show all configurable parameters |
+| 11 | `skills-store ranking-sniper sell-all` | Yes | Force-sell all open positions immediately |
+| 12 | `skills-store ranking-sniper sell` | Yes | Sell a specific token by address |
 
 *Analyze requires OKX API keys for ranking data but not SOL_PRIVATE_KEY.
 
@@ -326,7 +326,7 @@ Priority order (first match exits):
 
 ## Configurable Parameters
 
-Parameters are persisted at `~/.plugin-store/ranking_sniper_config.json`. View with `plugin-store ranking-sniper config`. Edit the JSON file directly to change values.
+Parameters are persisted at `~/.plugin-store/ranking_sniper_config.json`. View with `skills-store ranking-sniper config`. Edit the JSON file directly to change values.
 
 ### Money Management
 
@@ -373,12 +373,12 @@ Parameters are persisted at `~/.plugin-store/ranking_sniper_config.json`. View w
 
 ## CLI Command Reference
 
-### plugin-store ranking-sniper tick
+### skills-store ranking-sniper tick
 
 Execute one tick cycle: fetch ranking, check exits for existing positions, scan for new entry signals, execute trades.
 
 ```bash
-plugin-store ranking-sniper tick [--budget <sol>] [--per-trade <sol>] [--dry-run]
+skills-store ranking-sniper tick [--budget <sol>] [--per-trade <sol>] [--dry-run]
 ```
 
 | Param | Required | Default | Description |
@@ -406,12 +406,12 @@ plugin-store ranking-sniper tick [--budget <sol>] [--per-trade <sol>] [--dry-run
 - `exit_failed` — Sell swap failed (symbol, reason, error)
 - `no_ranking_data` — No ranking data available
 
-### plugin-store ranking-sniper start
+### skills-store ranking-sniper start
 
 Start the bot in foreground, executing `tick` every 10 seconds. Creates a PID file at `~/.plugin-store/ranking_sniper.pid`. Use Ctrl+C or `ranking-sniper stop` to terminate. Logs to `~/.plugin-store/ranking_sniper.log`.
 
 ```bash
-plugin-store ranking-sniper start [--budget <sol>] [--per-trade <sol>] [--dry-run]
+skills-store ranking-sniper start [--budget <sol>] [--per-trade <sol>] [--dry-run]
 ```
 
 | Param | Required | Default | Description |
@@ -422,20 +422,20 @@ plugin-store ranking-sniper start [--budget <sol>] [--per-trade <sol>] [--dry-ru
 
 Prints the full parameter summary before starting. Sends Telegram notification on start/stop if configured.
 
-### plugin-store ranking-sniper stop
+### skills-store ranking-sniper stop
 
 Stop a running bot by sending SIGTERM to the process in the PID file.
 
 ```bash
-plugin-store ranking-sniper stop
+skills-store ranking-sniper stop
 ```
 
-### plugin-store ranking-sniper status
+### skills-store ranking-sniper status
 
 Show current bot state, open positions, PnL overview, and whether the bot is running.
 
 ```bash
-plugin-store ranking-sniper status
+skills-store ranking-sniper status
 ```
 
 **Return fields:**
@@ -452,12 +452,12 @@ plugin-store ranking-sniper status
 | `known_tokens_count` | Total tokens seen |
 | `consecutive_errors` | Current error count |
 
-### plugin-store ranking-sniper report
+### skills-store ranking-sniper report
 
 Detailed performance report with win/loss stats.
 
 ```bash
-plugin-store ranking-sniper report
+skills-store ranking-sniper report
 ```
 
 **Return fields:**
@@ -476,12 +476,12 @@ plugin-store ranking-sniper report
 | `loss_count` | Losing trades |
 | `win_rate` | Win percentage |
 
-### plugin-store ranking-sniper history
+### skills-store ranking-sniper history
 
 Show trade history (most recent first).
 
 ```bash
-plugin-store ranking-sniper history [--limit <n>]
+skills-store ranking-sniper history [--limit <n>]
 ```
 
 | Param | Required | Default | Description |
@@ -490,24 +490,24 @@ plugin-store ranking-sniper history [--limit <n>]
 
 Each trade includes: time, symbol, token_address, action (BUY/SELL), price, amount_sol, score, exit_reason, pnl_pct, pnl_sol, tx_hash.
 
-### plugin-store ranking-sniper reset
+### skills-store ranking-sniper reset
 
 Delete all sniper state. Requires `--force` flag for safety.
 
 ```bash
-plugin-store ranking-sniper reset --force
+skills-store ranking-sniper reset --force
 ```
 
 | Param | Required | Default | Description |
 |-------|----------|---------|-------------|
 | `--force` | Yes | - | Required to confirm destructive action |
 
-### plugin-store ranking-sniper analyze
+### skills-store ranking-sniper analyze
 
 Market analysis showing the current trending ranking, top tokens, and bot state summary.
 
 ```bash
-plugin-store ranking-sniper analyze
+skills-store ranking-sniper analyze
 ```
 
 **Return fields:**
@@ -519,12 +519,12 @@ plugin-store ranking-sniper analyze
 | `known_tokens_count` | Total tokens the bot has seen |
 | `active_positions` | Number of open positions |
 
-### plugin-store ranking-sniper test-trade
+### skills-store ranking-sniper test-trade
 
 Execute a buy+sell round-trip for a specific token. For development and debugging only. Buys a small amount of the token, waits a few seconds, then sells it back.
 
 ```bash
-plugin-store ranking-sniper test-trade <token_address> [--amount <sol>]
+skills-store ranking-sniper test-trade <token_address> [--amount <sol>]
 ```
 
 | Param | Required | Default | Description |
@@ -546,12 +546,12 @@ plugin-store ranking-sniper test-trade <token_address> [--amount <sol>]
 | `price_before` | Price before buy |
 | `price_after` | Price after sell |
 
-### plugin-store ranking-sniper config
+### skills-store ranking-sniper config
 
 Show all configurable parameters and their current values, organized by category. Also shows the config file and log file paths.
 
 ```bash
-plugin-store ranking-sniper config
+skills-store ranking-sniper config
 ```
 
 Displays parameter groups:
@@ -565,12 +565,12 @@ Displays parameter groups:
 - Logging
 - Telegram notifications
 
-### plugin-store ranking-sniper sell-all
+### skills-store ranking-sniper sell-all
 
 Force-sell all open positions immediately. Retries with halved amounts if liquidity is insufficient (up to 4 attempts per position).
 
 ```bash
-plugin-store ranking-sniper sell-all
+skills-store ranking-sniper sell-all
 ```
 
 **Return fields:**
@@ -581,12 +581,12 @@ plugin-store ranking-sniper sell-all
 | `failed` | Number of positions that failed to sell |
 | `results` | Array of per-position results (symbol, token, status, tx_hash, sol_out, error) |
 
-### plugin-store ranking-sniper sell
+### skills-store ranking-sniper sell
 
 Sell a specific token by contract address with a raw token amount.
 
 ```bash
-plugin-store ranking-sniper sell <token_address> --amount <raw_amount>
+skills-store ranking-sniper sell <token_address> --amount <raw_amount>
 ```
 
 | Param | Required | Default | Description |
@@ -668,13 +668,13 @@ fetch_ranking(top_n=20)              <- OKX /token/toplist (sort by 5m change)
 > User: "What's trending on Solana right now? Start sniping if it looks good."
 
 ```
-1. plugin-store ranking-sniper analyze          -> see current ranking + top tokens
-2. plugin-store ranking-sniper config           -> review parameters
+1. skills-store ranking-sniper analyze          -> see current ranking + top tokens
+2. skills-store ranking-sniper config           -> review parameters
        | user adjusts thresholds if needed
-3. plugin-store ranking-sniper tick --dry-run   -> dry-run to see what passes filters
+3. skills-store ranking-sniper tick --dry-run   -> dry-run to see what passes filters
        | looks good
-4. plugin-store ranking-sniper start --budget 0.5 --per-trade 0.05  -> go live
-5. plugin-store ranking-sniper status           -> monitor positions
+4. skills-store ranking-sniper start --budget 0.5 --per-trade 0.05  -> go live
+5. skills-store ranking-sniper status           -> monitor positions
 ```
 
 ### Workflow B: Monitor and Emergency Exit
@@ -682,10 +682,10 @@ fetch_ranking(top_n=20)              <- OKX /token/toplist (sort by 5m change)
 > User: "Check my sniper positions. Sell everything if it's losing."
 
 ```
-1. plugin-store ranking-sniper status           -> see positions + PnL
+1. skills-store ranking-sniper status           -> see positions + PnL
        | user sees losses
-2. plugin-store ranking-sniper sell-all         -> emergency exit all positions
-3. plugin-store ranking-sniper report           -> review final stats
+2. skills-store ranking-sniper sell-all         -> emergency exit all positions
+3. skills-store ranking-sniper report           -> review final stats
 ```
 
 ### Workflow C: Research a Specific Token
@@ -693,10 +693,10 @@ fetch_ranking(top_n=20)              <- OKX /token/toplist (sort by 5m change)
 > User: "The sniper bought TOKEN, tell me more about it."
 
 ```
-1. plugin-store ranking-sniper status                              -> get token address
-2. okx-dex-token    plugin-store token search TOKEN --chain solana -> token details
-3. okx-dex-market   plugin-store market kline --address <addr> --chain solana -> chart
-4. okx-wallet-portfolio  plugin-store portfolio balance --chain solana -> wallet balance
+1. skills-store ranking-sniper status                              -> get token address
+2. okx-dex-token    skills-store token search TOKEN --chain solana -> token details
+3. okx-dex-market   skills-store market kline --address <addr> --chain solana -> chart
+4. okx-wallet-portfolio  skills-store portfolio balance --chain solana -> wallet balance
 ```
 
 ### Workflow D: Test Before Deploying
@@ -704,11 +704,11 @@ fetch_ranking(top_n=20)              <- OKX /token/toplist (sort by 5m change)
 > User: "I want to test the sniper on a specific token before going live."
 
 ```
-1. okx-dex-token    plugin-store token search HYPE --chain solana              -> find token
-2. plugin-store ranking-sniper test-trade <token_address> --amount 0.01        -> round-trip test
-3. plugin-store ranking-sniper start --budget 0.5 --per-trade 0.05 --dry-run  -> dry-run session
+1. okx-dex-token    skills-store token search HYPE --chain solana              -> find token
+2. skills-store ranking-sniper test-trade <token_address> --amount 0.01        -> round-trip test
+3. skills-store ranking-sniper start --budget 0.5 --per-trade 0.05 --dry-run  -> dry-run session
        | verify actions look correct
-4. plugin-store ranking-sniper start --budget 0.5 --per-trade 0.05            -> go live
+4. skills-store ranking-sniper start --budget 0.5 --per-trade 0.05            -> go live
 ```
 
 ---

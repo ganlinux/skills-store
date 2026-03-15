@@ -130,43 +130,43 @@ SOLANA_PRIVATE_KEY=...   # Solana wallet with SOL
 
 ```bash
 # Show current configuration
-plugin-store scanner config
+skills-store scanner config
 
 # Run a single scan cycle (scan -> filter -> signal -> trade -> monitor)
-plugin-store scanner tick
+skills-store scanner tick
 
 # Start continuous daemon (tick every 10 seconds)
-plugin-store scanner start
+skills-store scanner start
 
 # Stop running daemon
-plugin-store scanner stop
+skills-store scanner stop
 
 # View status and positions
-plugin-store scanner status
+skills-store scanner status
 
 # View PnL report
-plugin-store scanner report
+skills-store scanner report
 
 # Dry-run: analyze pipeline without trading
-plugin-store scanner analyze
+skills-store scanner analyze
 ```
 
-Configuration is managed via `plugin-store scanner config` and `plugin-store scanner set <key> <value>`. Changes take effect on the next scan cycle.
+Configuration is managed via `skills-store scanner config` and `skills-store scanner set <key> <value>`. Changes take effect on the next scan cycle.
 
 ## Command Index
 
 | # | Command | Auth | Description |
 |---|---------|------|-------------|
-| 1 | `plugin-store scanner tick` | Yes | Execute one scan cycle |
-| 2 | `plugin-store scanner start` | Yes | Start foreground daemon (tick every 10s) |
-| 3 | `plugin-store scanner stop` | No | Stop running daemon via PID file |
-| 4 | `plugin-store scanner status` | No | Show positions, session stats, PnL |
-| 5 | `plugin-store scanner report` | No | Detailed PnL report |
-| 6 | `plugin-store scanner history` | No | Trade history |
-| 7 | `plugin-store scanner reset --force` | No | Clear all state |
-| 8 | `plugin-store scanner analyze` | Yes | Dry-run full pipeline, output filter/signal results |
-| 9 | `plugin-store scanner config` | No | Show all parameters |
-| 10 | `plugin-store scanner set <key> <value>` | No | Set a config parameter |
+| 1 | `skills-store scanner tick` | Yes | Execute one scan cycle |
+| 2 | `skills-store scanner start` | Yes | Start foreground daemon (tick every 10s) |
+| 3 | `skills-store scanner stop` | No | Stop running daemon via PID file |
+| 4 | `skills-store scanner status` | No | Show positions, session stats, PnL |
+| 5 | `skills-store scanner report` | No | Detailed PnL report |
+| 6 | `skills-store scanner history` | No | Trade history |
+| 7 | `skills-store scanner reset --force` | No | Clear all state |
+| 8 | `skills-store scanner analyze` | Yes | Dry-run full pipeline, output filter/signal results |
+| 9 | `skills-store scanner config` | No | Show all parameters |
+| 10 | `skills-store scanner set <key> <value>` | No | Set a config parameter |
 
 ## Core Strategy
 
@@ -445,11 +445,11 @@ monitor_loop()                       ← TP1/TP2 use pct + be_offset
 > User: "I want to see what tokens pass the scanner filter right now, then start auto-trading"
 
 ```
-1. plugin-store memepump tokens --chain solana --stage MIGRATED           → manual browse
-2. plugin-store memepump token-dev-info --address <addr>                  → manual dev check
+1. skills-store memepump tokens --chain solana --stage MIGRATED           → manual browse
+2. skills-store memepump token-dev-info --address <addr>                  → manual dev check
        ↓ looks good, start the bot
-3. plugin-store scanner start                                             → auto mode
-4. plugin-store scanner status                                            → monitor
+3. skills-store scanner start                                             → auto mode
+4. skills-store scanner status                                            → monitor
 ```
 
 ### Workflow B: Signal Investigation
@@ -457,12 +457,12 @@ monitor_loop()                       ← TP1/TP2 use pct + be_offset
 > User: "The scanner found a SCALP signal on TOKEN, should I trust it?"
 
 ```
-1. plugin-store scanner status                                            → check signal details
-2. plugin-store memepump token-details --address <addr>                   → full detail
-3. plugin-store memepump token-dev-info --address <addr>                  → dev deep dive
-4. plugin-store memepump token-bundle-info --address <addr>               → bundle check
-5. plugin-store memepump aped-wallet --address <addr>                     → co-investors
-6. plugin-store market kline --address <addr> --chain solana              → price chart
+1. skills-store scanner status                                            → check signal details
+2. skills-store memepump token-details --address <addr>                   → full detail
+3. skills-store memepump token-dev-info --address <addr>                  → dev deep dive
+4. skills-store memepump token-bundle-info --address <addr>               → bundle check
+5. skills-store memepump aped-wallet --address <addr>                     → co-investors
+6. skills-store market kline --address <addr> --chain solana              → price chart
 ```
 
 ### Workflow C: Post-Trade Analysis
@@ -470,9 +470,9 @@ monitor_loop()                       ← TP1/TP2 use pct + be_offset
 > User: "The bot closed a trade, analyze what happened"
 
 ```
-1. plugin-store scanner history                                           → trade details
-2. plugin-store market kline --address <addr> --chain solana              → price action
-3. plugin-store memepump token-details --address <addr>                   → current state
+1. skills-store scanner history                                           → trade details
+2. skills-store market kline --address <addr> --chain solana              → price action
+3. skills-store memepump token-details --address <addr>                   → current state
 ```
 
 ---

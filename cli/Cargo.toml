@@ -1,11 +1,11 @@
 [package]
-name = "plugin-store-cli"
+name = "skills-store-cli"
 version = "1.0.0"
 edition = "2021"
 rust-version = "1.75"
 
 [[bin]]
-name = "plugin-store"
+name = "skills-store"
 path = "src/main.rs"
 
 [[bin]]

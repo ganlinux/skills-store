@@ -117,11 +117,11 @@ Key points to verify:
 
 ## Skill Routing
 
-- For single-protocol Aave operations → use `plugin-store aave`
-- For Morpho vault operations → use `plugin-store morpho`
+- For single-protocol Aave operations → use `skills-store aave`
+- For Morpho vault operations → use `skills-store morpho`
 - For grid trading → use `strategy-grid-trade`
-- For prediction markets → use `plugin-store polymarket` / `plugin-store kalshi`
-- For perpetual trading → use `plugin-store hyperliquid`
+- For prediction markets → use `skills-store polymarket` / `skills-store kalshi`
+- For perpetual trading → use `skills-store hyperliquid`
 
 ## Authentication
 
@@ -154,20 +154,20 @@ Base has low gas (~$0.001-0.05 gwei per tx, ~$0.01-0.03 cost), so shorter interv
 
 ```bash
 # Base — low gas, check every 5 minutes, rebalance if spread > 0.3%
-plugin-store auto-rebalance start --chain base --interval 300 --min-spread 0.3
+skills-store auto-rebalance start --chain base --interval 300 --min-spread 0.3
 
 # Ethereum — higher gas, check every hour, rebalance if spread > 1.0%
-plugin-store auto-rebalance start --chain ethereum --interval 3600 --min-spread 1.0
+skills-store auto-rebalance start --chain ethereum --interval 3600 --min-spread 1.0
 
 # With Telegram notifications
-plugin-store auto-rebalance start --chain base --interval 300 --min-spread 0.3 \
+skills-store auto-rebalance start --chain base --interval 300 --min-spread 0.3 \
   --telegram-token <BOT_TOKEN> --telegram-chat <CHAT_ID>
 
 # Check daemon status
-plugin-store auto-rebalance status
+skills-store auto-rebalance status
 
 # Stop daemon
-plugin-store auto-rebalance stop
+skills-store auto-rebalance stop
 ```
 
 ## Command Index
@@ -180,10 +180,10 @@ plugin-store auto-rebalance stop
 
 ## CLI Command Reference
 
-### plugin-store auto-rebalance start
+### skills-store auto-rebalance start
 
 ```bash
-plugin-store auto-rebalance start [--chain <chain>] [--interval <seconds>] [--min-spread <pct>] [--max-break-even <days>] [--telegram-token <token>] [--telegram-chat <id>]
+skills-store auto-rebalance start [--chain <chain>] [--interval <seconds>] [--min-spread <pct>] [--max-break-even <days>] [--telegram-token <token>] [--telegram-chat <id>]
 ```
 
 | Param | Default | Description |
@@ -216,11 +216,11 @@ plugin-store auto-rebalance start [--chain <chain>] [--interval <seconds>] [--mi
 - State persistence at `~/.plugin-store/auto-rebalance-state.json`
 - PID management — prevents duplicate instances
 
-### plugin-store auto-rebalance stop
+### skills-store auto-rebalance stop
 
 Sends SIGTERM to the running daemon via PID file (`~/.plugin-store/auto-rebalance-daemon.pid`).
 
-### plugin-store auto-rebalance status
+### skills-store auto-rebalance status
 
 Shows daemon status: running/stopped, config, current position (protocol + APY + balance), last check time, rebalance history.
 
@@ -245,27 +245,27 @@ Each cycle, the daemon:
 ### Workflow A: Research → Start Daemon
 
 ```
-1. plugin-store aave markets --chain base             → check current Aave rates
-2. plugin-store morpho vaults --chain base            → see Morpho vault options
-3. plugin-store auto-rebalance start --chain base ...     → let the daemon auto-optimize
+1. skills-store aave markets --chain base             → check current Aave rates
+2. skills-store morpho vaults --chain base            → see Morpho vault options
+3. skills-store auto-rebalance start --chain base ...     → let the daemon auto-optimize
 ```
 
 ### Workflow B: Check Status → Manual Intervention
 
 ```
-1. plugin-store auto-rebalance status                     → review position and PnL
-2. plugin-store morpho positions <address> --chain base → verify on-chain state
-3. plugin-store auto-rebalance stop                       → stop if needed
+1. skills-store auto-rebalance status                     → review position and PnL
+2. skills-store morpho positions <address> --chain base → verify on-chain state
+3. skills-store auto-rebalance stop                       → stop if needed
 ```
 
 ### Workflow C: Multi-Chain
 
 ```
 # Terminal 1
-plugin-store auto-rebalance start --chain base --interval 300 --min-spread 0.3
+skills-store auto-rebalance start --chain base --interval 300 --min-spread 0.3
 
 # Terminal 2
-plugin-store auto-rebalance start --chain ethereum --interval 3600 --min-spread 1.0
+skills-store auto-rebalance start --chain ethereum --interval 3600 --min-spread 1.0
 ```
 
 Note: each chain uses the same PID file, so only one daemon instance can run at a time. For multi-chain, run in separate terminals with separate working directories, or stop one before starting the other.

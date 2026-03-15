@@ -2,15 +2,15 @@
 set -e
 
 # ──────────────────────────────────────────────────────────────
-# plugin-store installer / updater (macOS / Linux)
+# skills-store installer / updater (macOS / Linux)
 #
 # Usage:
-#   curl -sSL https://raw.githubusercontent.com/okx/plugin-store/main/install.sh | sh
+#   curl -sSL https://raw.githubusercontent.com/purong-huang-1121/skills-store/main/install.sh | sh
 #
 # Behavior:
 #   - Fresh install: detect platform, download latest binary, verify, install.
 #   - Already installed: skip if the same version was verified within the
-#     last 12 hours (cache at ~/.plugin-store/last_check). Otherwise, compare the
+#     last 12 hours (cache at ~/.local/bin/.plugin-store/last_check). Otherwise, compare the
 #     local version with the latest GitHub release and upgrade if needed.
 #
 # Supported platforms:
@@ -19,7 +19,7 @@ set -e
 # ──────────────────────────────────────────────────────────────
 
 REPO="purong-huang-1121/skills-store"
-BINARY="plugin-store"
+BINARY="skills-store"
 INSTALL_DIR="$HOME/.cargo/bin"
 CACHE_DIR="$HOME/.local/bin/.plugin-store"
 CACHE_FILE="$CACHE_DIR/last_check"
@@ -177,7 +177,7 @@ ensure_in_path() {
   fi
 
   echo "" >> "$profile"
-  echo "# Added by plugin-store installer" >> "$profile"
+  echo "# Added by skills-store installer" >> "$profile"
   echo "$EXPORT_LINE" >> "$profile"
 
   # Make it available in the current script process

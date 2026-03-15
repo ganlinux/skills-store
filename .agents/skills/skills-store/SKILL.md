@@ -135,18 +135,18 @@ which plugin-store
 ### 安装后 / 能力查询
 - User **just installed** this skill, or asks **"你能做什么"**, **"有什么技能"**, **"支持哪些策略"**, **"what can you do"**, **"list skills"** → **Show Post-Install Welcome** (see above)
 
-### dApp 平台（已内置，直接执行 skills-store 命令）
-- User asks about **Aave** (存款、借贷、利率) → see **[Aave V3 CLI Reference]** below, run `skills-store aave`
-- User asks about **Morpho** (vault、借贷) → see **[Morpho CLI Reference]** below, run `skills-store morpho`
-- User asks about **Uniswap** (换币、swap、报价) → see **[Uniswap CLI Reference]** below, run `skills-store uniswap`
-- User asks about **Hyperliquid** (永续合约、funding rate、现货) → see **[Hyperliquid CLI Reference]** below, run `skills-store hyperliquid`
-- User asks about **Ethena** (sUSDe、质押、收益) → see **[Ethena CLI Reference]** below, run `skills-store ethena`
-- User asks about **Polymarket** (预测市场、下注) → see **[Polymarket CLI Reference]** below, run `skills-store polymarket`
-- User asks about **Kalshi** (合规预测市场) → see **[Kalshi CLI Reference]** below, run `skills-store kalshi`
+### dApp 平台（已内置，直接执行 plugin-store 命令）
+- User asks about **Aave** (存款、借贷、利率) → see **[Aave V3 CLI Reference]** below, run `plugin-store aave`
+- User asks about **Morpho** (vault、借贷) → see **[Morpho CLI Reference]** below, run `plugin-store morpho`
+- User asks about **Uniswap** (换币、swap、报价) → see **[Uniswap CLI Reference]** below, run `plugin-store uniswap`
+- User asks about **Hyperliquid** (永续合约、funding rate、现货) → see **[Hyperliquid CLI Reference]** below, run `plugin-store hyperliquid`
+- User asks about **Ethena** (sUSDe、质押、收益) → see **[Ethena CLI Reference]** below, run `plugin-store ethena`
+- User asks about **Polymarket** (预测市场、下注) → see **[Polymarket CLI Reference]** below, run `plugin-store polymarket`
+- User asks about **Kalshi** (合规预测市场) → see **[Kalshi CLI Reference]** below, run `plugin-store kalshi`
 
 ### 自动化策略
-- User asks about **grid trading specifically** → use `skills-store grid`
-- User asks about **USDC yield / auto-rebalance specifically** → use `skills-store auto-rebalance`
+- User asks about **grid trading specifically** → use `plugin-store grid`
+- User asks about **USDC yield / auto-rebalance specifically** → use `plugin-store auto-rebalance`
 
 ### 策略安装（重要）
 
@@ -323,7 +323,7 @@ Present the two automated strategies and the supported dApp ecosystem:
 │  ● 风险等级：⭐⭐ 中低（持有 ETH 有币价风险，网格对冲部分波动）      │
 │  ● 预估年化：10%~30%（取决于市场波动率，震荡行情最佳）              │
 │  ● 运行方式：后台守护进程，默认每 60 秒执行一次（可通过               │
-│    skills-store grid set --key tick_interval_secs --value N 调整）      │
+│    plugin-store grid set --key tick_interval_secs --value N 调整）      │
 │  ● 特点：自适应波动率、风控熔断、仓位限制、失败重试                  │
 ├─────────────────────────────────────────────────────────────────────┤
 │  C. 稳定币杠杆循环 (Aave Leverage Loop)                              │
@@ -354,7 +354,7 @@ Present the two automated strategies and the supported dApp ecosystem:
 │  ● 运行方式：后台守护进程，每 10 秒轮询                              │
 │  ● 风控：25 项链上安全检查 + Momentum Score 评分 + 6 层退出机制       │
 │  ● 特点：排名退出 > 硬止损 > 快速止损 > 追踪止损 > 时间止损 > 梯度止盈│
-│  ● 依赖：skills-store (token-ranking, token-advanced-info, holder,      │
+│  ● 依赖：plugin-store (token-ranking, token-advanced-info, holder,      │
 │          current-price, quote, swap)                                 │
 ├─────────────────────────────────────────────────────────────────────┤
 │  E. SOL 聪明钱跟单 (Signal Tracker)                                  │
@@ -370,7 +370,7 @@ Present the two automated strategies and the supported dApp ecosystem:
 │  ● 风控：MC/流动性过滤 + Dev 零容忍检查 + Bundler 操控检测            │
 │         + K线追高检测 + Session 风控（连亏暂停）                     │
 │  ● 特点：同车钱包数分级仓位 + 成本感知止盈 + 时间衰减止损            │
-│  ● 依赖：skills-store (signal-list, price-info, token-search, candles,  │
+│  ● 依赖：plugin-store (signal-list, price-info, token-search, candles,  │
 │          tokenDevInfo, tokenBundleInfo, balances, quote, swap)       │
 ├─────────────────────────────────────────────────────────────────────┤
 │  F. SOL Memepump 扫描 (Memepump Scanner)                             │
@@ -385,7 +385,7 @@ Present the two automated strategies and the supported dApp ecosystem:
 │  ● 运行方式：后台守护进程，每 10 秒轮询                              │
 │  ● 风控：服务端安全过滤 + Dev/Bundler 深度验证 + 三重信号检测        │
 │  ● 特点：SCALP/MINIMUM 分档仓位 + Hot Mode 自适应 + 30min 最大持仓  │
-│  ● 依赖：skills-store (memepump-tokenList, tokenDevInfo,               │
+│  ● 依赖：plugin-store (memepump-tokenList, tokenDevInfo,               │
 │          tokenBundleInfo, candles, trades, price-info, quote, swap)  │
 └─────────────────────────────────────────────────────────────────────┘
 
@@ -424,12 +424,12 @@ Present the two automated strategies and the supported dApp ecosystem:
 | "E", "聪明钱", "signal", "跟单", "smart money" | → Go to **Flow E** |
 | "F", "memepump", "pump.fun", "meme 扫描" | → Go to **Flow F** |
 | "都要", "both", "两个都跑" | → Explain that multiple strategies can run concurrently, guide one by one |
-| "Aave", "存款", "借贷" | → Route to `skills-store aave` commands |
-| "Uniswap", "换币", "swap" | → Route to `skills-store uniswap` commands |
-| "Hyperliquid", "永续", "合约" | → Route to `skills-store hyperliquid` commands |
-| "Ethena", "sUSDe", "质押" | → Route to `skills-store ethena` commands |
-| "Polymarket", "预测市场" | → Route to `skills-store polymarket` commands |
-| Mentions a specific dApp platform | → Route to the corresponding `skills-store <dapp>` commands |
+| "Aave", "存款", "借贷" | → Route to `plugin-store aave` commands |
+| "Uniswap", "换币", "swap" | → Route to `plugin-store uniswap` commands |
+| "Hyperliquid", "永续", "合约" | → Route to `plugin-store hyperliquid` commands |
+| "Ethena", "sUSDe", "质押" | → Route to `plugin-store ethena` commands |
+| "Polymarket", "预测市场" | → Route to `plugin-store polymarket` commands |
+| Mentions a specific dApp platform | → Route to the corresponding `plugin-store <dapp>` commands |
 
 ---
 
@@ -459,7 +459,7 @@ After user selects chain:
 （或者我可以帮你查一下钱包余额）
 ```
 
-If user provides wallet address or says "帮我查" → use `skills-store portfolio` to check balance.
+If user provides wallet address or says "帮我查" → use `plugin-store portfolio` to check balance.
 
 ### Step A3: Confirm and launch
 
@@ -481,7 +481,7 @@ If user provides wallet address or says "帮我查" → use `skills-store portfo
 After confirmation, execute:
 
 ```bash
-skills-store auto-rebalance start --chain {chain} --interval 60 --min-spread 0.5
+plugin-store auto-rebalance start --chain {chain} --interval 60 --min-spread 0.5
 ```
 
 ### Step A4: Post-launch guidance
@@ -490,12 +490,12 @@ skills-store auto-rebalance start --chain {chain} --interval 60 --min-spread 0.5
 智能调仓守护进程已启动！
 
 后续操作：
-• 查看状态：skills-store auto-rebalance status
-• 停止运行：skills-store auto-rebalance stop
+• 查看状态：plugin-store auto-rebalance status
+• 停止运行：plugin-store auto-rebalance stop
 • 设置 Telegram 通知（推荐）：
   export TELEGRAM_BOT_TOKEN=<TOKEN>
   export TELEGRAM_CHAT_ID=<CHAT_ID>
-  skills-store auto-rebalance start --chain {chain}
+  plugin-store auto-rebalance start --chain {chain}
 ```
 
 ---
@@ -516,14 +516,14 @@ ETH/USDC 网格交易目前仅支持 Base 链。
 （或者我可以帮你查一下钱包余额）
 ```
 
-If user provides wallet address or says "帮我查" → use `skills-store portfolio` to check balance.
+If user provides wallet address or says "帮我查" → use `plugin-store portfolio` to check balance.
 
 ### Step B2: Market analysis
 
 Before launching, run market analysis:
 
 ```bash
-skills-store grid analyze
+plugin-store grid analyze
 ```
 
 Present results to user:
@@ -557,7 +557,7 @@ Market comment logic:
 | 链 | Base |
 | 可用资金 | ~${total_usd} (ETH + USDC) |
 | 网格级数 | 6 |
-| 执行频率 | 每 60 秒（可通过 skills-store grid set --key tick_interval_secs 调整） |
+| 执行频率 | 每 60 秒（可通过 plugin-store grid set --key tick_interval_secs 调整） |
 | 单笔上限 | 12% 总仓位 |
 | 仓位保护 | ETH 占比 35%~65% |
 
@@ -567,7 +567,7 @@ Market comment logic:
 After confirmation, execute:
 
 ```bash
-skills-store grid start
+plugin-store grid start
 ```
 
 ### Step B4: Post-launch guidance
@@ -576,13 +576,13 @@ skills-store grid start
 网格交易 Bot 已启动！
 
 后续操作：
-• 查看状态：skills-store grid status
-• 查看收益：skills-store grid report
-• 交易记录：skills-store grid history
-• 停止运行：skills-store grid stop
-• 市场分析：skills-store grid analyze
-• 调整参数：skills-store grid set --key <name> --value <value>
-• 查看配置：skills-store grid config
+• 查看状态：plugin-store grid status
+• 查看收益：plugin-store grid report
+• 交易记录：plugin-store grid history
+• 停止运行：plugin-store grid stop
+• 市场分析：plugin-store grid analyze
+• 调整参数：plugin-store grid set --key <name> --value <value>
+• 查看配置：plugin-store grid config
 ```
 
 ---
@@ -629,7 +629,7 @@ skills-store grid start
 After user selects chain, check real-time利差:
 
 ```bash
-skills-store aave reserve USDC --chain {chain}
+plugin-store aave reserve USDC --chain {chain}
 ```
 
 Extract `supplyAPY` and `borrowAPY`, then validate:
@@ -679,17 +679,17 @@ After user provides amount:
 
 ### Step C4: Execute leverage loops
 
-After user confirms, execute `skills-store aave` commands in sequence:
+After user confirms, execute `plugin-store aave` commands in sequence:
 
 ```
 Step 1: 验证利差
 ──────────────
-  skills-store aave reserve USDC --chain {chain}
+  plugin-store aave reserve USDC --chain {chain}
   → 确认 supply > borrow，否则中止
 
 Step 2: 首次存入
 ──────────────
-  skills-store aave supply --asset USDC --amount {principal} --chain {chain}
+  plugin-store aave supply --asset USDC --amount {principal} --chain {chain}
   → 确认 tx 成功
   → total_supplied = principal
 
@@ -698,21 +698,21 @@ Step 3: 循环（最多 3 轮）
   每一轮：
 
     a) 检查健康因子：
-       skills-store aave account {address} --chain {chain}
+       plugin-store aave account {address} --chain {chain}
        → 如果 health_factor < 1.30，停止循环，报告当前状态
 
     b) 借出 USDC：
        borrow_amount = 上一轮存入金额 × 0.80
-       skills-store aave borrow --asset USDC --amount {borrow_amount} --chain {chain}
+       plugin-store aave borrow --asset USDC --amount {borrow_amount} --chain {chain}
        → total_borrowed += borrow_amount
 
     c) 再存入：
-       skills-store aave supply --asset USDC --amount {borrow_amount} --chain {chain}
+       plugin-store aave supply --asset USDC --amount {borrow_amount} --chain {chain}
        → total_supplied += borrow_amount
 
 Step 4: 报告最终状态
 ────────────────────
-  skills-store aave account {address} --chain {chain}
+  plugin-store aave account {address} --chain {chain}
 ```
 
 Present final result:
@@ -733,8 +733,8 @@ Present final result:
 | 预估月收益 | ~${monthly} |
 
 后续操作：
-• 查看仓位：skills-store aave account {address} --chain {chain}
-• 查看利率变化：skills-store aave reserve USDC --chain {chain}
+• 查看仓位：plugin-store aave account {address} --chain {chain}
+• 查看利率变化：plugin-store aave reserve USDC --chain {chain}
 • 退出策略（去杠杆）：告诉我 "退出策略C" 或 "去杠杆"
 ```
 
@@ -744,15 +744,15 @@ When user says "退出策略C", "去杠杆", "close leverage loop":
 
 ```
 Step 1: 查看当前仓位
-  skills-store aave account {address} --chain {chain}
+  plugin-store aave account {address} --chain {chain}
 
 Step 2: 反向循环（逐轮退出）
   每一轮：
-    a) skills-store aave withdraw --asset USDC --amount {该轮借出金额} --chain {chain}
-    b) skills-store aave repay --asset USDC --amount {该轮借出金额} --chain {chain}
+    a) plugin-store aave withdraw --asset USDC --amount {该轮借出金额} --chain {chain}
+    b) plugin-store aave repay --asset USDC --amount {该轮借出金额} --chain {chain}
 
 Step 3: 最终提取全部
-  skills-store aave withdraw --asset USDC --amount max --chain {chain}
+  plugin-store aave withdraw --asset USDC --amount max --chain {chain}
 
 Step 4: 报告
   "已完全退出杠杆循环，取回 {final_amount} USDC"
@@ -763,8 +763,8 @@ Step 4: 报告
 When user asks "策略C状态", "杠杆循环状态", "check my loop":
 
 ```bash
-skills-store aave account {address} --chain {chain}
-skills-store aave reserve USDC --chain {chain}
+plugin-store aave account {address} --chain {chain}
+plugin-store aave reserve USDC --chain {chain}
 ```
 
 Present:
@@ -806,15 +806,15 @@ Alerts:
    - 追踪止损（+8%激活/12%回撤）> 时间止损（6h）> 梯度止盈（+5%/+15%/+30% 分三批）
 5. **安全网**: 停止引擎自动清仓所有持仓，日亏损上限 15% 自动停机
 
-### 依赖的 skills-store 命令
+### 依赖的 plugin-store 命令
 
 | CLI 命令 | 用途 |
 |----------|------|
-| `skills-store ranking-sniper tick` | 执行单次轮询 |
-| `skills-store ranking-sniper start` | 启动守护进程 |
-| `skills-store ranking-sniper stop` | 停止运行 |
-| `skills-store ranking-sniper status` | 查看状态 |
-| `skills-store ranking-sniper report` | 详细 PnL 报告 |
+| `plugin-store ranking-sniper tick` | 执行单次轮询 |
+| `plugin-store ranking-sniper start` | 启动守护进程 |
+| `plugin-store ranking-sniper stop` | 停止运行 |
+| `plugin-store ranking-sniper status` | 查看状态 |
+| `plugin-store ranking-sniper report` | 详细 PnL 报告 |
 
 ### Step D1: Confirm and configure
 
@@ -824,7 +824,7 @@ SOL 涨幅榜狙击 运行在 Solana 链上。
 需要准备：
 • SOL 钱包私钥（用于签署链上交易）
 • 钱包中有足够 SOL（用于交易 + Gas）
-• skills-store 已安装
+• plugin-store 已安装
 
 请问你准备投入多少 SOL？（建议 0.5~2 SOL 起步测试）
 ```
@@ -835,10 +835,10 @@ SOL 涨幅榜狙击 运行在 Solana 链上。
 
 ```bash
 # 查看当前配置
-skills-store ranking-sniper config
+plugin-store ranking-sniper config
 
 # 启动
-skills-store ranking-sniper start
+plugin-store ranking-sniper start
 ```
 
 ---
@@ -868,15 +868,15 @@ skills-store ranking-sniper start
    - 趋势时间止损（15min K线反转）+ 4h 硬性退出
 8. **Session 风控**: 连续亏损 3 次暂停 10min / 累计亏损 0.05 SOL 暂停 30min / 累计 0.10 SOL 终止
 
-### 依赖的 skills-store 命令
+### 依赖的 plugin-store 命令
 
 | CLI 命令 | 用途 |
 |----------|------|
-| `skills-store signal-tracker tick` | 执行单次轮询 |
-| `skills-store signal-tracker start` | 启动守护进程 |
-| `skills-store signal-tracker stop` | 停止运行 |
-| `skills-store signal-tracker status` | 查看状态 |
-| `skills-store signal-tracker report` | 详细 PnL 报告 |
+| `plugin-store signal-tracker tick` | 执行单次轮询 |
+| `plugin-store signal-tracker start` | 启动守护进程 |
+| `plugin-store signal-tracker stop` | 停止运行 |
+| `plugin-store signal-tracker status` | 查看状态 |
+| `plugin-store signal-tracker report` | 详细 PnL 报告 |
 
 ### Step E1: Confirm and configure
 
@@ -886,7 +886,7 @@ SOL 聪明钱跟单 运行在 Solana 链上。
 需要准备：
 • SOL 钱包私钥
 • 钱包中有足够 SOL
-• skills-store 已安装
+• plugin-store 已安装
 
 请问你准备投入多少 SOL？（建议 0.3~1 SOL 起步测试）
 ```
@@ -897,13 +897,13 @@ SOL 聪明钱跟单 运行在 Solana 链上。
 
 ```bash
 # 查看当前配置
-skills-store signal-tracker config
+plugin-store signal-tracker config
 
 # 启动（推荐先用 dry-run 测试）
-skills-store signal-tracker start --dry-run
+plugin-store signal-tracker start --dry-run
 
 # 确认无误后正式启动
-skills-store signal-tracker start
+plugin-store signal-tracker start
 ```
 
 ---
@@ -937,16 +937,16 @@ skills-store signal-tracker start
    - 时间止损（SCALP 5min / HOT 8min / QUIET 15min）
    - TP1 后 breakeven stop + Trailing -5%，最大持仓 30min
 
-### 依赖的 skills-store 命令
+### 依赖的 plugin-store 命令
 
 | CLI 命令 | 用途 |
 |----------|------|
-| `skills-store scanner tick` | 执行单次扫描 |
-| `skills-store scanner start` | 启动守护进程 |
-| `skills-store scanner stop` | 停止运行 |
-| `skills-store scanner status` | 查看状态 |
-| `skills-store scanner report` | 详细 PnL 报告 |
-| `skills-store scanner analyze` | Dry-run 分析 |
+| `plugin-store scanner tick` | 执行单次扫描 |
+| `plugin-store scanner start` | 启动守护进程 |
+| `plugin-store scanner stop` | 停止运行 |
+| `plugin-store scanner status` | 查看状态 |
+| `plugin-store scanner report` | 详细 PnL 报告 |
+| `plugin-store scanner analyze` | Dry-run 分析 |
 
 ### Step F1: Confirm and configure
 
@@ -956,7 +956,7 @@ SOL Memepump 扫描 运行在 Solana 链上。
 需要准备：
 • SOL 钱包私钥
 • 钱包中有足够 SOL
-• skills-store 已安装
+• plugin-store 已安装
 
 请问你准备投入多少 SOL？（建议 0.2~0.5 SOL 起步测试）
 ```
@@ -967,13 +967,13 @@ SOL Memepump 扫描 运行在 Solana 链上。
 
 ```bash
 # 查看当前配置
-skills-store scanner config
+plugin-store scanner config
 
 # 先用 analyze 观察
-skills-store scanner analyze
+plugin-store scanner analyze
 
 # 启动
-skills-store scanner start
+plugin-store scanner start
 ```
 
 ---
@@ -990,7 +990,7 @@ skills-store scanner start
 | 最小资金 | ~$500 (ETH) | ~$50 | ~$100 (Arb) | ~0.5 SOL | ~0.3 SOL | ~0.2 SOL |
 | 需要的密钥 | EVM_PRIVATE_KEY | EVM_PRIVATE_KEY + OKX API | EVM_PRIVATE_KEY | SOL 私钥 + OKX API | SOL 私钥 + OKX API | SOL 私钥 + OKX API |
 | 运行方式 | 后台守护进程 | 后台守护进程 | AI 引导执行 | 后台守护进程 | 后台守护进程 | 后台守护进程 |
-| CLI 命令 | `skills-store auto-rebalance` | `skills-store grid` | `skills-store aave` | `skills-store ranking-sniper` | `skills-store signal-tracker` | `skills-store scanner` |
+| CLI 命令 | `plugin-store auto-rebalance` | `plugin-store grid` | `plugin-store aave` | `plugin-store ranking-sniper` | `plugin-store signal-tracker` | `plugin-store scanner` |
 
 ## Authentication Requirements
 
@@ -1031,21 +1031,21 @@ TELEGRAM_CHAT_ID=...
 | Scenario | Behavior |
 |---|---|
 | User asks for both strategies | Guide to run both in separate terminals |
-| User has no USDC | Suggest using `skills-store uniswap swap` to swap first |
+| User has no USDC | Suggest using `plugin-store uniswap swap` to swap first |
 | User has no ETH on Base | Suggest bridging or swapping |
 | EVM_PRIVATE_KEY not set | Show setup instructions before launching |
-| User asks about other strategies (funding rate, sUSDe loop) | These are not yet built-in — guide user through the steps using individual `plugin-store` commands (`skills-store aave`, `skills-store hyperliquid`, `skills-store ethena`) |
+| User asks about other strategies (funding rate, sUSDe loop) | These are not yet built-in — guide user through the steps using individual `plugin-store` commands (`plugin-store aave`, `plugin-store hyperliquid`, `plugin-store ethena`) |
 | Aave 利差为负 (borrow > supply) | Strategy C 不可执行，建议策略 A 或等待利率回归 |
 | 健康因子过低 | 策略 C 循环时自动停止（HF < 1.30），提醒用户去杠杆 |
 | User just installed dapp-composer with no follow-up | Show Post-Install Welcome listing all skills |
 | User asks "你能做什么" / "what can you do" / "有什么 skill" | Show Post-Install Welcome listing all skills |
-| User asks about a specific dApp platform | Route to the corresponding `skills-store <dapp>` command directly |
+| User asks about a specific dApp platform | Route to the corresponding `plugin-store <dapp>` command directly |
 | User asks "支持哪些平台/协议" | Show the dApp platform table |
 | User says "哪个更好" | Use the comparison table; recommend A for conservative, D/E/F for aggressive Meme 玩家 |
 | User has very small capital (<$50) | Recommend B on Base (low gas) or D/E/F on Solana (小额测试) |
 | User has large capital (>$10k) | Recommend A on Ethereum (higher TVL, deeper liquidity) |
 | User asks about Solana Meme 策略 | Show D/E/F options, explain each strategy's signal source differs |
-| skills-store 未安装 | 引导安装: `curl -sSL .../install.sh \| sh` |
+| plugin-store 未安装 | 引导安装: `curl -sSL .../install.sh \| sh` |
 | SOL_PRIVATE_KEY not set | Show setup instructions, warn about Meme 币高风险 |
 | User asks "哪个 Solana 策略更好" | D 最稳（榜单动量）、E 最聪明（跟单）、F 最激进（Pump.fun），建议小额分散测试 |
 
@@ -1070,13 +1070,13 @@ The following dApp commands are all available via the `plugin-store` binary afte
 
 | # | Command | Auth | Description |
 |---|---------|------|-------------|
-| 1 | `skills-store aave markets --chain <chain>` | No | List all Aave V3 reserve markets |
-| 2 | `skills-store aave reserve <symbol> --chain <chain>` | No | Get reserve APY, liquidity, config |
-| 3 | `skills-store aave account <address> --chain <chain>` | No | View positions, health factor, borrowing power |
-| 4 | `skills-store aave supply --token <symbol> --amount <n> --chain <chain>` | Yes | Supply assets to earn yield |
-| 5 | `skills-store aave withdraw --token <symbol> --amount <n\|max> --chain <chain>` | Yes | Withdraw supplied assets |
-| 6 | `skills-store aave borrow --token <symbol> --amount <n> --chain <chain>` | Yes | Borrow against collateral |
-| 7 | `skills-store aave repay --token <symbol> --amount <n\|max> --chain <chain>` | Yes | Repay borrowed assets |
+| 1 | `plugin-store aave markets --chain <chain>` | No | List all Aave V3 reserve markets |
+| 2 | `plugin-store aave reserve <symbol> --chain <chain>` | No | Get reserve APY, liquidity, config |
+| 3 | `plugin-store aave account <address> --chain <chain>` | No | View positions, health factor, borrowing power |
+| 4 | `plugin-store aave supply --token <symbol> --amount <n> --chain <chain>` | Yes | Supply assets to earn yield |
+| 5 | `plugin-store aave withdraw --token <symbol> --amount <n\|max> --chain <chain>` | Yes | Withdraw supplied assets |
+| 6 | `plugin-store aave borrow --token <symbol> --amount <n> --chain <chain>` | Yes | Borrow against collateral |
+| 7 | `plugin-store aave repay --token <symbol> --amount <n\|max> --chain <chain>` | Yes | Repay borrowed assets |
 
 **Supported chains:** ethereum, polygon, arbitrum, base
 
@@ -1090,13 +1090,13 @@ The following dApp commands are all available via the `plugin-store` binary afte
 ### Quickstart
 
 ```bash
-skills-store aave markets --chain ethereum
-skills-store aave reserve USDC --chain ethereum
-skills-store aave account 0xYourAddress --chain ethereum
-skills-store aave supply --token USDC --amount 100 --chain ethereum
-skills-store aave withdraw --token USDC --amount max --chain ethereum
-skills-store aave borrow --token USDC --amount 500 --chain ethereum
-skills-store aave repay --token USDC --amount max --chain ethereum
+plugin-store aave markets --chain ethereum
+plugin-store aave reserve USDC --chain ethereum
+plugin-store aave account 0xYourAddress --chain ethereum
+plugin-store aave supply --token USDC --amount 100 --chain ethereum
+plugin-store aave withdraw --token USDC --amount max --chain ethereum
+plugin-store aave borrow --token USDC --amount 500 --chain ethereum
+plugin-store aave repay --token USDC --amount max --chain ethereum
 ```
 
 ### Edge Cases
@@ -1121,11 +1121,11 @@ skills-store aave repay --token USDC --amount max --chain ethereum
 
 | # | Command | Auth | Description |
 |---|---------|------|-------------|
-| 1 | `skills-store morpho markets [--chain <chain>] [--order-by <field>] [--direction <dir>]` | No | List Morpho Blue markets with APY and TVL |
-| 2 | `skills-store morpho market <unique_key> [--chain-id <id>]` | No | Get detailed market data |
-| 3 | `skills-store morpho vaults [--chain <chain>] [--order-by <field>] [--direction <dir>]` | No | List MetaMorpho vaults |
-| 4 | `skills-store morpho vault <address> [--chain-id <id>]` | No | Get detailed vault data |
-| 5 | `skills-store morpho positions <address> [--chain <chain>]` | No | View wallet positions |
+| 1 | `plugin-store morpho markets [--chain <chain>] [--order-by <field>] [--direction <dir>]` | No | List Morpho Blue markets with APY and TVL |
+| 2 | `plugin-store morpho market <unique_key> [--chain-id <id>]` | No | Get detailed market data |
+| 3 | `plugin-store morpho vaults [--chain <chain>] [--order-by <field>] [--direction <dir>]` | No | List MetaMorpho vaults |
+| 4 | `plugin-store morpho vault <address> [--chain-id <id>]` | No | Get detailed vault data |
+| 5 | `plugin-store morpho positions <address> [--chain <chain>]` | No | View wallet positions |
 
 **Supported chains:** ethereum, base, arbitrum, optimism, polygon  
 **Chain IDs:** 1=Ethereum, 8453=Base, 42161=Arbitrum, 10=Optimism, 137=Polygon  
@@ -1142,11 +1142,11 @@ skills-store aave repay --token USDC --amount max --chain ethereum
 ### Quickstart
 
 ```bash
-skills-store morpho markets --chain base --order-by SupplyApy --direction Desc
-skills-store morpho market 0xb323...86cc --chain-id 1
-skills-store morpho vaults --chain ethereum --order-by NetApy --direction Desc
-skills-store morpho vault 0xBEEF...F378 --chain-id 1
-skills-store morpho positions 0xYourAddress --chain base
+plugin-store morpho markets --chain base --order-by SupplyApy --direction Desc
+plugin-store morpho market 0xb323...86cc --chain-id 1
+plugin-store morpho vaults --chain ethereum --order-by NetApy --direction Desc
+plugin-store morpho vault 0xBEEF...F378 --chain-id 1
+plugin-store morpho positions 0xYourAddress --chain base
 ```
 
 ---
@@ -1165,9 +1165,9 @@ skills-store morpho positions 0xYourAddress --chain base
 
 | # | Command | Auth | Description |
 |---|---------|------|-------------|
-| 1 | `skills-store uniswap quote --from <token> --to <token> --amount <n> [--chain <chain>] [--fee <bps>]` | Yes* | Get estimated swap output without executing |
-| 2 | `skills-store uniswap swap --from <token> --to <token> --amount <n> [--chain <chain>] [--fee <bps>] [--slippage <bps>]` | Yes | Execute on-chain swap |
-| 3 | `skills-store uniswap tokens [--chain <chain>]` | No | List well-known token symbols and addresses |
+| 1 | `plugin-store uniswap quote --from <token> --to <token> --amount <n> [--chain <chain>] [--fee <bps>]` | Yes* | Get estimated swap output without executing |
+| 2 | `plugin-store uniswap swap --from <token> --to <token> --amount <n> [--chain <chain>] [--fee <bps>] [--slippage <bps>]` | Yes | Execute on-chain swap |
+| 3 | `plugin-store uniswap tokens [--chain <chain>]` | No | List well-known token symbols and addresses |
 
 **Supported chains:** arbitrum (default), ethereum, polygon  
 **Fee tiers:** 100 (0.01%), 500 (0.05%), 3000 (0.3%), 10000 (1%)  
@@ -1191,10 +1191,10 @@ skills-store morpho positions 0xYourAddress --chain base
 ### Quickstart
 
 ```bash
-skills-store uniswap tokens --chain arbitrum
-skills-store uniswap quote --from WETH --to wstETH --amount 0.05
-skills-store uniswap swap --from WETH --to wstETH --amount 0.05
-skills-store uniswap swap --from USDC --to WETH --amount 100 --chain ethereum --fee 3000
+plugin-store uniswap tokens --chain arbitrum
+plugin-store uniswap quote --from WETH --to wstETH --amount 0.05
+plugin-store uniswap swap --from WETH --to wstETH --amount 0.05
+plugin-store uniswap swap --from USDC --to WETH --amount 100 --chain ethereum --fee 3000
 ```
 
 ---
@@ -1212,17 +1212,17 @@ skills-store uniswap swap --from USDC --to WETH --amount 100 --chain ethereum --
 
 | # | Command | Auth | Description |
 |---|---------|------|-------------|
-| 1 | `skills-store hyperliquid markets` | No | List perpetual markets (price, leverage, volume) |
-| 2 | `skills-store hyperliquid spot-markets` | No | List spot markets |
-| 3 | `skills-store hyperliquid price <symbol>` | No | Real-time mid price |
-| 4 | `skills-store hyperliquid orderbook <symbol>` | No | L2 order book snapshot |
-| 5 | `skills-store hyperliquid funding <symbol>` | No | Current and historical funding rates |
-| 6 | `skills-store hyperliquid buy --symbol <s> --size <n> --price <p> [--leverage <l>]` | Yes | Buy / open long |
-| 7 | `skills-store hyperliquid sell --symbol <s> --size <n> --price <p>` | Yes | Sell / open short |
-| 8 | `skills-store hyperliquid cancel --symbol <s> --order-id <oid>` | Yes | Cancel an open order |
-| 9 | `skills-store hyperliquid positions` | Yes | View perpetual positions |
-| 10 | `skills-store hyperliquid balances` | Yes | View USDC margin and spot balances |
-| 11 | `skills-store hyperliquid orders [--symbol <s>]` | Yes | List open orders |
+| 1 | `plugin-store hyperliquid markets` | No | List perpetual markets (price, leverage, volume) |
+| 2 | `plugin-store hyperliquid spot-markets` | No | List spot markets |
+| 3 | `plugin-store hyperliquid price <symbol>` | No | Real-time mid price |
+| 4 | `plugin-store hyperliquid orderbook <symbol>` | No | L2 order book snapshot |
+| 5 | `plugin-store hyperliquid funding <symbol>` | No | Current and historical funding rates |
+| 6 | `plugin-store hyperliquid buy --symbol <s> --size <n> --price <p> [--leverage <l>]` | Yes | Buy / open long |
+| 7 | `plugin-store hyperliquid sell --symbol <s> --size <n> --price <p>` | Yes | Sell / open short |
+| 8 | `plugin-store hyperliquid cancel --symbol <s> --order-id <oid>` | Yes | Cancel an open order |
+| 9 | `plugin-store hyperliquid positions` | Yes | View perpetual positions |
+| 10 | `plugin-store hyperliquid balances` | Yes | View USDC margin and spot balances |
+| 11 | `plugin-store hyperliquid orders [--symbol <s>]` | Yes | List open orders |
 
 ### Key Concepts
 
@@ -1234,12 +1234,12 @@ skills-store uniswap swap --from USDC --to WETH --amount 100 --chain ethereum --
 ### Quickstart
 
 ```bash
-skills-store hyperliquid markets
-skills-store hyperliquid funding BTC
-skills-store hyperliquid price BTC
-skills-store hyperliquid buy --symbol BTC --size 0.01 --price 65000 --leverage 10
-skills-store hyperliquid positions
-skills-store hyperliquid sell --symbol BTC --size 0.01 --price 66000
+plugin-store hyperliquid markets
+plugin-store hyperliquid funding BTC
+plugin-store hyperliquid price BTC
+plugin-store hyperliquid buy --symbol BTC --size 0.01 --price 65000 --leverage 10
+plugin-store hyperliquid positions
+plugin-store hyperliquid sell --symbol BTC --size 0.01 --price 66000
 ```
 
 ---
@@ -1257,11 +1257,11 @@ skills-store hyperliquid sell --symbol BTC --size 0.01 --price 66000
 
 | # | Command | Auth | Description |
 |---|---------|------|-------------|
-| 1 | `skills-store ethena apy` | No | sUSDe exchange rate, total assets, cooldown duration |
-| 2 | `skills-store ethena balance <address>` | No | USDe and sUSDe balances for a wallet |
-| 3 | `skills-store ethena stake --amount <n>` | Yes | Deposit USDe → receive sUSDe shares |
-| 4 | `skills-store ethena cooldown --amount <n>` | Yes | Initiate 7-day unstake cooldown (amount in USDe terms) |
-| 5 | `skills-store ethena unstake` | Yes | Withdraw USDe after cooldown completes |
+| 1 | `plugin-store ethena apy` | No | sUSDe exchange rate, total assets, cooldown duration |
+| 2 | `plugin-store ethena balance <address>` | No | USDe and sUSDe balances for a wallet |
+| 3 | `plugin-store ethena stake --amount <n>` | Yes | Deposit USDe → receive sUSDe shares |
+| 4 | `plugin-store ethena cooldown --amount <n>` | Yes | Initiate 7-day unstake cooldown (amount in USDe terms) |
+| 5 | `plugin-store ethena unstake` | Yes | Withdraw USDe after cooldown completes |
 
 ### Key Concepts
 
@@ -1273,11 +1273,11 @@ skills-store hyperliquid sell --symbol BTC --size 0.01 --price 66000
 ### Quickstart
 
 ```bash
-skills-store ethena apy
-skills-store ethena balance 0xYourAddress
-skills-store ethena stake --amount 1000
-skills-store ethena cooldown --amount 500
-skills-store ethena unstake
+plugin-store ethena apy
+plugin-store ethena balance 0xYourAddress
+plugin-store ethena stake --amount 1000
+plugin-store ethena cooldown --amount 500
+plugin-store ethena unstake
 ```
 
 ---
@@ -1295,18 +1295,18 @@ skills-store ethena unstake
 
 | # | Command | Auth | Description |
 |---|---------|------|-------------|
-| 1 | `skills-store polymarket search <query> [--limit <n>]` | No | Search prediction markets |
-| 2 | `skills-store polymarket markets [--tag <tag>] [--sort <sort>] [--limit <n>]` | No | List popular/active markets |
-| 3 | `skills-store polymarket event <event_id>` | No | Get event details with related markets |
-| 4 | `skills-store polymarket price <token_id>` | No | Get Yes/No price, midpoint, spread |
-| 5 | `skills-store polymarket book <token_id>` | No | View orderbook depth |
-| 6 | `skills-store polymarket history <token_id> [--interval <1m\|1h\|1d\|1w>]` | No | Price history |
-| 7 | `skills-store polymarket buy --token <id> --amount <usdc> --price <0-1>` | Yes | Buy outcome shares |
-| 8 | `skills-store polymarket sell --token <id> --amount <shares> --price <0-1>` | Yes | Sell outcome shares |
-| 9 | `skills-store polymarket cancel <order_id>` | Yes | Cancel an open order |
-| 10 | `skills-store polymarket orders [--market <id>]` | Yes | View open orders |
-| 11 | `skills-store polymarket positions` | Yes | View current positions |
-| 12 | `skills-store polymarket balance` | Yes | View USDC balance |
+| 1 | `plugin-store polymarket search <query> [--limit <n>]` | No | Search prediction markets |
+| 2 | `plugin-store polymarket markets [--tag <tag>] [--sort <sort>] [--limit <n>]` | No | List popular/active markets |
+| 3 | `plugin-store polymarket event <event_id>` | No | Get event details with related markets |
+| 4 | `plugin-store polymarket price <token_id>` | No | Get Yes/No price, midpoint, spread |
+| 5 | `plugin-store polymarket book <token_id>` | No | View orderbook depth |
+| 6 | `plugin-store polymarket history <token_id> [--interval <1m\|1h\|1d\|1w>]` | No | Price history |
+| 7 | `plugin-store polymarket buy --token <id> --amount <usdc> --price <0-1>` | Yes | Buy outcome shares |
+| 8 | `plugin-store polymarket sell --token <id> --amount <shares> --price <0-1>` | Yes | Sell outcome shares |
+| 9 | `plugin-store polymarket cancel <order_id>` | Yes | Cancel an open order |
+| 10 | `plugin-store polymarket orders [--market <id>]` | Yes | View open orders |
+| 11 | `plugin-store polymarket positions` | Yes | View current positions |
+| 12 | `plugin-store polymarket balance` | Yes | View USDC balance |
 
 ### Key Concepts
 
@@ -1318,11 +1318,11 @@ skills-store ethena unstake
 ### Quickstart
 
 ```bash
-skills-store polymarket markets --sort volume --limit 10
-skills-store polymarket search "bitcoin"
-skills-store polymarket price <token_id>
-skills-store polymarket buy --token <token_id> --amount 100 --price 0.65
-skills-store polymarket positions
+plugin-store polymarket markets --sort volume --limit 10
+plugin-store polymarket search "bitcoin"
+plugin-store polymarket price <token_id>
+plugin-store polymarket buy --token <token_id> --amount 100 --price 0.65
+plugin-store polymarket positions
 ```
 
 ---
@@ -1347,18 +1347,18 @@ skills-store polymarket positions
 
 | # | Command | Auth | Description |
 |---|---------|------|-------------|
-| 1 | `skills-store kalshi [--env demo\|prod] search <query>` | No | Search events and markets |
-| 2 | `skills-store kalshi [--env demo\|prod] markets [--sort <sort>] [--limit <n>]` | No | List popular/active markets |
-| 3 | `skills-store kalshi [--env demo\|prod] event <event_ticker>` | No | Get event with related markets |
-| 4 | `skills-store kalshi [--env demo\|prod] price <ticker>` | No | Get Yes/No price and probability |
-| 5 | `skills-store kalshi [--env demo\|prod] book <ticker>` | No | View orderbook depth |
-| 6 | `skills-store kalshi [--env demo\|prod] history <ticker> [--interval <1m\|1h\|1d\|1w>]` | No | Price history |
-| 7 | `skills-store kalshi [--env demo\|prod] buy --ticker <t> --side <yes\|no> --count <n> --price <0-1>` | Yes | Buy outcome contracts |
-| 8 | `skills-store kalshi [--env demo\|prod] sell --ticker <t> --side <yes\|no> --count <n> --price <0-1>` | Yes | Sell outcome contracts |
-| 9 | `skills-store kalshi [--env demo\|prod] cancel <order_id>` | Yes | Cancel an open order |
-| 10 | `skills-store kalshi [--env demo\|prod] orders [--ticker <t>]` | Yes | View open orders |
-| 11 | `skills-store kalshi [--env demo\|prod] positions` | Yes | View current positions |
-| 12 | `skills-store kalshi [--env demo\|prod] balance` | Yes | View USD account balance |
+| 1 | `plugin-store kalshi [--env demo\|prod] search <query>` | No | Search events and markets |
+| 2 | `plugin-store kalshi [--env demo\|prod] markets [--sort <sort>] [--limit <n>]` | No | List popular/active markets |
+| 3 | `plugin-store kalshi [--env demo\|prod] event <event_ticker>` | No | Get event with related markets |
+| 4 | `plugin-store kalshi [--env demo\|prod] price <ticker>` | No | Get Yes/No price and probability |
+| 5 | `plugin-store kalshi [--env demo\|prod] book <ticker>` | No | View orderbook depth |
+| 6 | `plugin-store kalshi [--env demo\|prod] history <ticker> [--interval <1m\|1h\|1d\|1w>]` | No | Price history |
+| 7 | `plugin-store kalshi [--env demo\|prod] buy --ticker <t> --side <yes\|no> --count <n> --price <0-1>` | Yes | Buy outcome contracts |
+| 8 | `plugin-store kalshi [--env demo\|prod] sell --ticker <t> --side <yes\|no> --count <n> --price <0-1>` | Yes | Sell outcome contracts |
+| 9 | `plugin-store kalshi [--env demo\|prod] cancel <order_id>` | Yes | Cancel an open order |
+| 10 | `plugin-store kalshi [--env demo\|prod] orders [--ticker <t>]` | Yes | View open orders |
+| 11 | `plugin-store kalshi [--env demo\|prod] positions` | Yes | View current positions |
+| 12 | `plugin-store kalshi [--env demo\|prod] balance` | Yes | View USD account balance |
 
 ### Key Concepts
 
@@ -1370,9 +1370,9 @@ skills-store polymarket positions
 ### Quickstart
 
 ```bash
-skills-store kalshi markets
-skills-store kalshi search "fed rate"
-skills-store kalshi price FED-24DEC-T5.25
-skills-store kalshi buy --ticker FED-24DEC-T5.25 --side yes --count 10 --price 0.65
-skills-store kalshi --env prod buy --ticker FED-24DEC-T5.25 --side yes --count 10 --price 0.65
+plugin-store kalshi markets
+plugin-store kalshi search "fed rate"
+plugin-store kalshi price FED-24DEC-T5.25
+plugin-store kalshi buy --ticker FED-24DEC-T5.25 --side yes --count 10 --price 0.65
+plugin-store kalshi --env prod buy --ticker FED-24DEC-T5.25 --side yes --count 10 --price 0.65
 ```
